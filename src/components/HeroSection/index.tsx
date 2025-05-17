@@ -1,9 +1,9 @@
 // src/components/sections/HeroSection.tsx
-import { Button } from "@mui/joy"
-import React from "react"
-import { LuArrowRight } from "react-icons/lu"
-import { Link } from "react-router-dom"
-import profileImage from "../assets/react.svg"
+import Button from '@mui/material/Button';
+import React from "react";
+import { LuArrowRight } from "react-icons/lu";
+import { Link } from "react-router-dom";
+import profileImage from "../assets/react.svg";
 
 export const HeroSection: React.FC = () => {
   return (
@@ -22,13 +22,13 @@ export const HeroSection: React.FC = () => {
             </p>
             <div className="flex flex-col gap-2 min-[400px]:flex-row">
               <Link to="/contact">
-                <Button size="lg">
+                <Button size="large">
                   Get in touch
                   <LuArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
               <Link to="/projects">
-                <Button size="lg" variant="outlined">
+                <Button size="large" variant="outlined">
                   View my work
                 </Button>
               </Link>
