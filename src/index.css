@@ -2,11 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-  background-color: '#121212';
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 

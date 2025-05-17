@@ -1,5 +1,6 @@
 export default {
-  home: '/',
+  layout: "/",
+  home: "/home",
   about: '/about',
   experience: '/experience',
   projects: '/projects',

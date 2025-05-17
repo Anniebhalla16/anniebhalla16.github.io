@@ -1,10 +1,13 @@
-import Loading from "./Loading"
+import { Outlet } from "react-router-dom"
 
 const AppLayout = () => {
+  
   return (
-    <div className="text-red-700 h-1 w-6">
-    
-    </div>
+        <div className="min-h-screen bg-red-300 text-white flex flex-col align-top">
+<div>Navbar</div>
+<Outlet/>
+<div>Footer</div>
+</div>
   )
 }
 
