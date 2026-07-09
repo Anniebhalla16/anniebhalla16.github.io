@@ -3,6 +3,9 @@
 out/
 next-env.d.ts
 
+# Vercel
+.vercel/
+
 # Logs
 logs
 *.log
