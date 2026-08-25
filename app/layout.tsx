@@ -1,39 +1,31 @@
 import type { Metadata } from 'next'
-import { Inter, Space_Mono } from 'next/font/google'
+import { Instrument_Serif, Poppins } from 'next/font/google'
 import './globals.css'
-import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 
-const inter = Inter({
+const serif = Instrument_Serif({
   subsets: ['latin'],
-  variable: '--font-inter',
+  weight: '400',
+  style: ['normal', 'italic'],
+  variable: '--font-serif',
   display: 'swap',
 })
 
-const spaceMono = Space_Mono({
-  weight: ['400', '700'],
+const sans = Poppins({
   subsets: ['latin'],
-  variable: '--font-space-mono',
+  weight: ['300', '400', '500', '600'],
+  variable: '--font-sans',
   display: 'swap',
 })
 
 export const metadata: Metadata = {
-  title: 'Annie Bhalla | Autonomous Systems Engineer',
+  title: 'Annie Bhalla',
   description:
-    'Software Engineer & Autonomous Systems MSc graduate specializing in planetary robotics, real-time diagnostics, and space mission operations. Targeting flight software, planetary SLAM, and autonomous space systems.',
-  keywords: [
-    'aerospace engineer',
-    'autonomous systems',
-    'robotics',
-    'SLAM',
-    'planetary exploration',
-    'space software',
-    'ROS2',
-    '3D Gaussian Splatting',
-  ],
+    'Astrophysics, data, and the long habit of looking up. An observation log kept in Munich.',
   openGraph: {
-    title: 'Annie Bhalla | Autonomous Systems Engineer',
-    description: 'Engineering Autonomy for the Next Frontier.',
+    title: 'Annie Bhalla',
+    description:
+      'Astrophysics, data, and the long habit of looking up. An observation log kept in Munich.',
     type: 'website',
   },
 }
@@ -44,9 +36,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${spaceMono.variable}`}>
-      <body className="bg-space-900 text-slate-200 antialiased">
-        <Navbar />
+    <html lang="en" className={`${serif.variable} ${sans.variable}`}>
+      <body style={{ fontFamily: 'var(--font-sans), system-ui, sans-serif' }}>
         {children}
         <Footer />
       </body>

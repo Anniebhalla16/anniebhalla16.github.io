@@ -1,6 +1,13 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+:root {
+  --ink-900: #090a0e;
+  --ink-950: #07080b;
+  --ink-800: #0a0b11;
+  --paper: #f3efe4;
+  --paper-dim: #cfcabd;
+  --star-warm: #f4e2c4;
+  --star-cool: #c8cedb;
+  --hairline: rgba(232, 228, 217, 0.12);
+}
 
 html {
   scroll-behavior: smooth;
@@ -10,32 +17,49 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background-color: #0a0e1a;
-  color: #e2e8f0;
+  background: var(--ink-950);
+  color: #e8e4d9;
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: #0a0e1a; }
-::-webkit-scrollbar-thumb { background: rgba(0, 212, 255, 0.25); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(0, 212, 255, 0.55); }
-
-/* Grid background */
-.bg-grid {
-  background-image:
-    linear-gradient(rgba(0, 212, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 212, 255, 0.04) 1px, transparent 1px);
-  background-size: 50px 50px;
+a {
+  color: #e8e4d9;
+  text-decoration: none;
+}
+a:hover {
+  color: #fff;
 }
 
-/* Glow helpers */
-.glow-cyan { box-shadow: 0 0 20px rgba(0, 212, 255, 0.35); }
-.text-glow-cyan { text-shadow: 0 0 30px rgba(0, 212, 255, 0.5); }
-.glow-orange { box-shadow: 0 0 20px rgba(255, 107, 53, 0.4); }
+@keyframes drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-240px, -140px, 0); }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes orbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes aurora {
+  0%, 100% { transform: translate3d(-3%, 0, 0) scaleY(1); opacity: 0.4; }
+  50% { transform: translate3d(4%, -2%, 0) scaleY(1.14); opacity: 0.62; }
+}
+@keyframes aurora2 {
+  0%, 100% { transform: translate3d(3%, 1%, 0) scaleY(1.08); opacity: 0.28; }
+  50% { transform: translate3d(-4%, -2%, 0) scaleY(0.92); opacity: 0.48; }
+}
 
-/* Cyan muted backgrounds */
-.bg-cyan-muted { background-color: rgba(0, 212, 255, 0.08); }
-.bg-orange-muted { background-color: rgba(255, 107, 53, 0.08); }
-
-/* Section divider */
-.section-divider { border-top: 1px solid rgba(0, 212, 255, 0.08); }
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
