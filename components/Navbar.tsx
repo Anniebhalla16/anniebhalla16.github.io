@@ -14,7 +14,7 @@ const items = [
 
 export default function Navbar() {
   const pathname = usePathname()
-  const isInner = pathname !== '/'
+  const isInner = !!pathname && pathname !== '/'
   const [open, setOpen] = useState(false)
 
   return (
