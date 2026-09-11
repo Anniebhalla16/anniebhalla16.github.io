@@ -31,14 +31,29 @@ interface Evt {
 
 const events: Evt[] = [
   {
+    id: 'suraasa', date: '07/2022', year: 2022.5, level: 3.5,
+    cat: 'roles', title: 'SDE Frontend → SDE2', org: 'Suraasa, India',
+    detail: 'UI components for the Suraasa teacher training platform. Built a proctoring system using Web APIs for online assessments. Designed an event-driven calendar with react-fullcalendar.',
+  },
+  {
+    id: 'mercedes', date: '11/2023', year: 2023.83, level: 5,
+    cat: 'roles', title: 'Full Stack Developer', org: 'Mercedes-Benz AG, Sindelfingen',
+    detail: 'Working student at the Virtual Reality Center (CoC VR/AR/XR). Built a complex web app end-to-end: Django + PostgreSQL backend, React/TypeScript/Tailwind frontend, RESTful APIs, booking system with role-based access, and Linux server setup with Nginx and Gunicorn.',
+  },
+  {
     id: 'msc-start', date: '09/2023', year: 2023.7, level: 3,
     cat: 'academic', title: 'MSc CS — Autonomous Systems', org: 'University of Stuttgart',
     detail: 'Started Masters programme. Focus on robotics, state estimation, and sensor fusion.',
   },
   {
-    id: 'dlr', date: '01/2024', year: 2024.0, level: 7.5,
-    cat: 'research', title: 'Research Student — Master Thesis', org: 'DLR-RMC, Oberpfaffenhofen',
-    detail: 'Visual navigation fusing hyperspectral + RGB-D data with 3DGS SLAM for planetary surface navigation. 42% ATE reduction.',
+    id: 'sir-lab', date: '10/2024', year: 2024.75, level: 6,
+    cat: 'research', title: 'Research Assistant — Semantic SLAM', org: 'SIR Lab, University of Stuttgart',
+    detail: 'Set up and analysed Semantic SLAM pipelines — Kimera, Hydra, and Chronos — on EuRoC datasets and in-lab collected data on Linux with ROS at the Socially Intelligent Robotics Lab.',
+  },
+  {
+    id: 'dlr', date: '04/2025', year: 2025.25, level: 7.5,
+    cat: 'research', title: 'Master Thesis — HyperLoop', org: 'DLR-RMC, Munich',
+    detail: 'HyperLoop: developed a SLAM framework extending 3DGS SLAM (LoopSplat) with hyperspectral imaging to improve loop closure detection in planetary-like terrains. Evaluated on DLR Moon-Mars Outdoor Test Site datasets.',
   },
   {
     id: 'msc-grad', date: '10/2025', year: 2025.75, level: 5,
@@ -46,19 +61,24 @@ const events: Evt[] = [
     detail: 'Graduated with distinction. Thesis on visual planetary navigation accepted.',
   },
   {
-    id: 'sereact', date: '10/2025', year: 2025.85, level: 6.5,
+    id: 'wba', date: '10/2025', year: 2025.78, level: 7,
+    cat: 'space', title: 'Mission Control Officer', org: "World's Biggest Analog (OeWF)",
+    detail: "Remote Science Support Task Manager for the world's biggest analog space mission — 17 habitat sites running simultaneously across the globe. Managed the Daily Activity Matrix: live operational tracking across timezones, science teams, and mission timelines over eight days.",
+  },
+  {
+    id: 'sereact', date: '11/2025', year: 2025.83, level: 6.5,
     cat: 'roles', title: 'Software Engineer', org: 'Sereact, Stuttgart',
-    detail: 'Telemetry & analytics infrastructure for 100+ robot stations. Event-driven pipelines on RabbitMQ / WebSockets. KPI reliability lifted from 50% → ~95%.',
+    detail: 'Real-time monitoring, diagnostics, and analytics platform for robotic manipulation systems across sites in Europe and the US. Python FastAPI services on message queues, Next.js/TypeScript frontend, containerised on GCP Cloud Run and Vercel.',
   },
   {
-    id: 'aaka', date: '01/2026', year: 2026.05, level: 7,
-    cat: 'space', title: 'Analog Astronaut — EVA Lead', org: 'Aaka Space Studio, India',
-    detail: 'Led 3 EVAs on 8-day lunar analog mission at Dholavira terrain. Supply coordination and scientific data collection.',
+    id: 'aaka', date: '01/2026', year: 2026.05, level: 7.5,
+    cat: 'space', title: 'Analog Astronaut — EVA Lead', org: "Aaka Space Studio (India's First Civilian Crew)",
+    detail: "Selected for India's first civilian analog astronaut crew — a six-day simulated lunar surface mission in the extreme desert of Dholavira, Gujarat, one of Earth's closest analogs to lunar conditions. Served as EVA Lead: planned, coordinated, and executed surface operations under resource-constrained, isolated habitat conditions.",
   },
   {
-    id: 'oewf', date: '07/2026', year: 2026.5, level: 9.2,
-    cat: 'space', title: 'Flight Control Team Member', org: 'Austrian Space Forum',
-    detail: 'AMADEE-27 analog Mars mission — data management, ICD definitions, comms between Flight Crew and Mission Support Center.',
+    id: 'oewf', date: '08/2026', year: 2026.58, level: 9.2,
+    cat: 'space', title: 'Flight Control Team Member', org: 'Austrian Space Forum (OeWF)',
+    detail: 'In-training volunteer for AMADEE-2027, a Martian analog mission. Authoring Data Management Workflow Definitions and Guidelines; formalising operational data and communication interfaces across Flight Crew, Ground Operations, and Mission Support Center following ICD conventions consistent with ECSS space engineering practice.',
   },
   {
     id: 'iac', date: '10/2026', year: 2026.78, level: 8.5,
@@ -70,8 +90,8 @@ const events: Evt[] = [
 const VW = 1000
 const VH = 260
 const PL = 30, PR = 30, PT = 24, PB = 52
-const DEFAULT_RANGE: [number, number] = [2023.0, 2027.4]
-const MIN_YEAR = 2020
+const DEFAULT_RANGE: [number, number] = [2021.8, 2027.4]
+const MIN_YEAR = 2019
 const MAX_YEAR = 2029
 
 const MONTH_ABBR = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
