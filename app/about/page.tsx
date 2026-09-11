@@ -1,0 +1,230 @@
+import styles from './about.module.css'
+
+// Parchment palette — shared with all inner pages
+const P = {
+  bg: '#F5EEE6',
+  card: '#FBF7F2',
+  navy: '#1B2640',
+  cognac: '#A0714F',
+  blue: '#4A7FA5',
+  muted: '#9B8B7A',
+  hairline: 'rgba(160,113,79,.15)',
+}
+
+const roles = [
+  {
+    period: '07/2026 – present',
+    title: 'Flight Control Team Member',
+    org: 'Austrian Space Forum',
+    detail: 'AMADEE-27 analog Mars mission — data management, ICD definitions, comms between Flight Crew and Mission Support Center.',
+    color: P.cognac,
+  },
+  {
+    period: '10/2025 – present',
+    title: 'Software Engineer',
+    org: 'Sereact, Stuttgart',
+    detail: 'Telemetry & analytics for 100+ robot stations. Event-driven pipelines on RabbitMQ / WebSockets. KPI reliability lifted from 50% to ~95%.',
+    color: P.blue,
+  },
+  {
+    period: '01/2024 – 10/2025',
+    title: 'Research Student — Master Thesis',
+    org: 'DLR-RMC, Oberpfaffenhofen',
+    detail: 'Visual navigation fusing hyperspectral + RGB-D with 3DGS SLAM for planetary surface navigation. 42% ATE reduction. IAC 2026 presentation.',
+    color: P.muted,
+  },
+  {
+    period: '01 – 08/2026',
+    title: 'Analog Astronaut — EVA Lead',
+    org: 'Aaka Space Studio, India',
+    detail: 'Led 3 EVAs on 8-day lunar analog mission at Dholavira terrain. Supply coordination and scientific data collection.',
+    color: P.cognac,
+  },
+]
+
+const facts = [
+  { label: 'Degree', value: 'MSc Computer Science — Autonomous Systems (1.8)', sub: 'University of Stuttgart, 2023–2025' },
+  { label: 'Based', value: 'Stuttgart', sub: 'Germany' },
+  { label: 'Languages', value: 'English (native) · Hindi (native) · German (B2)', sub: '' },
+  { label: 'Callsign', value: 'Aurora', sub: '' },
+]
+
+const skills = [
+  { cat: 'Navigation & Estimation', items: 'Visual SLAM, 3DGS, 6-DoF state estimation, multi-sensor fusion, stereo depth, hyperspectral imaging' },
+  { cat: 'Robotics & Systems', items: 'ROS2, sensor data sync, real-time systems, computer vision, OpenCV, Open3D' },
+  { cat: 'Mission Operations', items: 'Flight control ops, ICD & interface definition, ECSS standards, telemetry analysis, data management' },
+  { cat: 'Programming', items: 'Python, C++, TypeScript, PyTorch, CUDA, Docker, RabbitMQ, REST APIs' },
+]
+
+export default function AboutPage() {
+  return (
+    <div
+      className="page-inner"
+      style={{
+        position: 'relative',
+        minHeight: '100vh',
+        paddingTop: 'clamp(90px,14vh,140px)',
+        paddingBottom: 'clamp(80px,10vh,120px)',
+        paddingLeft: 'clamp(28px,6vw,110px)',
+        paddingRight: 'clamp(28px,6vw,110px)',
+        boxSizing: 'border-box',
+        color: P.navy,
+      }}
+    >
+      {/* Watermark — bleeds from left */}
+      <div
+        aria-hidden
+        style={{
+          position: 'absolute',
+          bottom: -20,
+          right: 0,
+          fontFamily: 'var(--font-serif), Georgia, serif',
+          fontSize: 'clamp(100px,18vw,260px)',
+          fontStyle: 'normal',
+          color: 'transparent',
+          WebkitTextStroke: '1px rgba(160,113,79,.09)',
+          letterSpacing: '-.02em',
+          lineHeight: 1,
+          userSelect: 'none',
+          pointerEvents: 'none',
+        }}
+      >
+        About
+      </div>
+
+      <div style={{ position: 'relative', zIndex: 1 }}>
+
+        {/* Hero row: headline + photo */}
+        <div
+          className={styles.heroRow}
+          style={{ borderBottom: `1px solid ${P.hairline}` }}
+        >
+          {/* Left: label + headline + bio */}
+          <div>
+            <div
+              style={{
+                fontSize: 11,
+                letterSpacing: '.26em',
+                textTransform: 'uppercase',
+                color: P.muted,
+                marginBottom: 20,
+                fontFamily: 'var(--font-sans), system-ui, sans-serif',
+              }}
+            >
+              04 · About
+            </div>
+            <h1
+              style={{
+                margin: '0 0 clamp(20px,3vh,32px)',
+                fontFamily: 'var(--font-serif), Georgia, serif',
+                fontWeight: 400,
+                fontSize: 'clamp(44px,8vw,108px)',
+                lineHeight: 0.92,
+                letterSpacing: '-.02em',
+                color: P.navy,
+              }}
+            >
+              I&apos;m Annie.
+            </h1>
+            <p
+              style={{
+                margin: '0 0 20px',
+                fontSize: 'clamp(16px,1.3vw,19px)',
+                lineHeight: 1.75,
+                color: P.navy,
+                maxWidth: 580,
+              }}
+            >
+              I work at the boundary of robotics, autonomous navigation, and space
+              exploration. My research at DLR fused hyperspectral and depth data with
+              3DGS SLAM for planetary surface navigation. Now I build telemetry
+              infrastructure at Sereact and coordinate data flow on an analog Mars
+              mission with the Austrian Space Forum.
+            </p>
+            <p
+              style={{
+                margin: 0,
+                fontSize: 'clamp(15px,1.1vw,17px)',
+                lineHeight: 1.75,
+                color: P.muted,
+                maxWidth: 560,
+              }}
+            >
+              I&apos;m drawn to problems where you have to reason carefully about
+              what you can&apos;t directly see — state estimation, signal through
+              noise, decisions under uncertainty. Outside of that, I photograph things
+              that are too faint, compete in hackathons, and occasionally walk on
+              terrain designed to feel like another planet.
+            </p>
+          </div>
+
+          {/* Right: photo */}
+          <div style={{ position: 'relative' }}>
+            <img
+              src="/annie-about.png"
+              alt="Annie Bhalla in flight suit in front of space capsule"
+              className={styles.photo}
+              style={{
+                width: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center top',
+                borderRadius: 12,
+                display: 'block',
+                boxShadow: '0 8px 48px rgba(27,38,64,.12)',
+              }}
+            />
+            {/* Caption tag */}
+            <div
+              style={{
+                position: 'absolute',
+                bottom: 14,
+                left: 14,
+                padding: '5px 10px',
+                background: 'rgba(251,247,242,.88)',
+                backdropFilter: 'blur(8px)',
+                borderRadius: 6,
+                fontSize: 11,
+                color: P.muted,
+                letterSpacing: '.08em',
+              }}
+            >
+              Aaka Space Studio · 2026
+            </div>
+          </div>
+        </div>
+
+        {/* Facts grid */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+            gap: 'clamp(24px,3vw,40px)',
+          }}
+        >
+          {facts.map((f) => (
+            <div key={f.label}>
+              <div
+                style={{
+                  fontSize: 10,
+                  letterSpacing: '.22em',
+                  textTransform: 'uppercase',
+                  color: P.muted,
+                  marginBottom: 8,
+                  fontFamily: 'var(--font-sans), system-ui, sans-serif',
+                }}
+              >
+                {f.label}
+              </div>
+              <div style={{ fontSize: 14, color: P.navy, fontWeight: 500, marginBottom: f.sub ? 4 : 0 }}>
+                {f.value}
+              </div>
+              {f.sub && (
+                <div style={{ fontSize: 12, color: P.muted }}>{f.sub}</div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}

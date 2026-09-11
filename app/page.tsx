@@ -7,7 +7,6 @@ export default function Home() {
       style={{
         position: 'relative',
         minHeight: '100vh',
-        overflow: 'hidden',
         backgroundImage: 'url(/hero-bg.png)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
@@ -15,6 +14,7 @@ export default function Home() {
         color: '#e8e4d9',
       }}
     >
+      {/* Dark overlay */}
       <div
         style={{
           position: 'absolute',
@@ -23,8 +23,22 @@ export default function Home() {
           zIndex: 0,
         }}
       />
-      <StarField />
-      <Hero />
+      {/* StarField clipped to this hero only */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          overflow: 'hidden',
+          zIndex: 0,
+          pointerEvents: 'none',
+        }}
+      >
+        <StarField />
+      </div>
+      {/* Content above everything */}
+      <div style={{ position: 'relative', zIndex: 2 }}>
+        <Hero />
+      </div>
     </div>
   )
 }

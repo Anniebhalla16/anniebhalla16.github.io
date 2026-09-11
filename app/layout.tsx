@@ -22,12 +22,12 @@ const sans = Poppins({
 export const metadata: Metadata = {
   title: 'Annie Bhalla',
   description:
-    'Astrophysics, data, and the long habit of looking up. An observation log kept in Munich.',
+    'Astrophysics, data, and the long habit of looking up. An observation log kept in Stuttgart.',
   icons: { icon: '/favicon.png' },
   openGraph: {
     title: 'Annie Bhalla',
     description:
-      'Astrophysics, data, and the long habit of looking up. An observation log kept in Munich.',
+      'Astrophysics, data, and the long habit of looking up. An observation log kept in Stuttgart.',
     type: 'website',
   },
 }

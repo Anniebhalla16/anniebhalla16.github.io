@@ -36,6 +36,7 @@ body {
   padding: 0;
   background: var(--ink-950);
   color: var(--paper);
+  overflow-x: hidden;
 }
 
 a {
@@ -69,6 +70,26 @@ a:hover {
 @keyframes aurora2 {
   0%, 100% { transform: translate3d(3%, 1%, 0) scaleY(1.08); opacity: 0.28; }
   50% { transform: translate3d(-4%, -2%, 0) scaleY(0.92); opacity: 0.48; }
+}
+
+
+/* ── Inner page parchment theme ───────────────────────── */
+.page-inner {
+  background:
+    radial-gradient(ellipse 70% 55% at 10% 5%,  #EBD9C2 0%, transparent 65%),
+    radial-gradient(ellipse 55% 45% at 92% 92%, #E6DDD4 0%, transparent 55%),
+    #F5EEE6;
+}
+
+.page-inner::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='250' height='250'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='250' height='250' filter='url(%23g)'/%3E%3C/svg%3E");
+  background-size: 250px 250px;
+  opacity: 0.028;
+  pointer-events: none;
+  z-index: 0;
 }
 
 

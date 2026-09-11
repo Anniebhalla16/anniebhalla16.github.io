@@ -1,0 +1,24 @@
+.heroRow {
+  display: grid;
+  grid-template-columns: 1fr clamp(220px, 32%, 400px);
+  gap: clamp(20px, 2.5vw, 36px);
+  align-items: end;
+  margin-bottom: clamp(40px, 6vh, 64px);
+  padding-bottom: clamp(40px, 6vh, 64px);
+}
+
+.photo {
+  aspect-ratio: 3 / 4;
+}
+
+@media (max-width: 768px) {
+  .heroRow {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .photo {
+    aspect-ratio: 4 / 3;
+    object-position: center 20%;
+  }
+}

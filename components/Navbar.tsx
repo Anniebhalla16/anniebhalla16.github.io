@@ -1,4 +1,10 @@
+'use client'
+
+import { useState } from 'react'
+import { usePathname } from 'next/navigation'
+
 const items = [
+  { label: 'Home', href: '/' },
   { label: 'Trajectory', href: '/trajectory' },
   { label: 'Entries', href: '/entries' },
   { label: 'Lab', href: '/lab' },
@@ -7,8 +13,14 @@ const items = [
 ]
 
 export default function Navbar() {
+  const pathname = usePathname()
+  const isInner = pathname !== '/'
+  const [open, setOpen] = useState(false)
+
   return (
     <div
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
       style={{
         position: 'fixed',
         top: 0,
@@ -30,6 +42,8 @@ export default function Navbar() {
           backdropFilter: 'blur(14px)',
           fontSize: 13.5,
           letterSpacing: '.01em',
+          transform: isInner && !open ? 'translateY(calc(-100% + 14px))' : 'translateY(0)',
+          transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
         }}
       >
         {items.map((i) => (

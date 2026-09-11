@@ -158,15 +158,6 @@ export default async function Footer() {
         }}
       >
         <span>© 2026 Annie Bhalla</span>
-        <div style={{ display: 'flex', gap: 28, flexWrap: 'wrap' }}>
-          <a href="#colophon" style={{ color: 'rgba(224,225,221,.4)' }}>
-            Colophon
-          </a>
-          <a href="#rss" style={{ color: 'rgba(224,225,221,.4)' }}>
-            RSS
-          </a>
-          <span>Built in Munich</span>
-        </div>
       </div>
     </footer>
   )
