@@ -213,7 +213,7 @@ export default function TrajectoryPage() {
       style={{
         position: 'relative',
         minHeight: '100vh',
-        paddingTop: 'clamp(90px,14vh,140px)',
+        paddingTop: 'clamp(60px,8vh,90px)',
         paddingBottom: 'clamp(80px,10vh,120px)',
         paddingLeft: 'clamp(28px,6vw,110px)',
         paddingRight: 'clamp(28px,6vw,110px)',
@@ -221,18 +221,18 @@ export default function TrajectoryPage() {
         color: P.navy,
       }}
     >
-      <div aria-hidden style={{ position: 'absolute', bottom: -20, right: 0, fontFamily: 'var(--font-serif), Georgia, serif', fontSize: 'clamp(80px,14vw,220px)', color: 'transparent', WebkitTextStroke: '1px rgba(160,113,79,.08)', letterSpacing: '-.02em', lineHeight: 1, userSelect: 'none', pointerEvents: 'none', whiteSpace: 'nowrap' }}>
-        Trajectory
+      <div aria-hidden style={{ position: 'absolute', top: 'clamp(50px,8vh,100px)', left: '50%', transform: 'translateX(-50%)', fontFamily: 'var(--font-serif), Georgia, serif', fontSize: 'clamp(160px,26vw,400px)', color: 'transparent', WebkitTextStroke: '1px rgba(160,113,79,.13)', letterSpacing: '-.01em', lineHeight: 1, userSelect: 'none', pointerEvents: 'none', whiteSpace: 'nowrap' }}>
+        AURORA
       </div>
 
       <div style={{ position: 'relative', zIndex: 1 }}>
 
         {/* Header */}
-        <div style={{ marginBottom: 'clamp(40px,6vh,64px)' }}>
+        <div style={{ marginBottom: 'clamp(28px,4vh,48px)' }}>
           <div style={{ fontSize: 11, letterSpacing: '.26em', textTransform: 'uppercase', color: P.muted, marginBottom: 20, fontFamily: 'var(--font-sans), system-ui, sans-serif' }}>
             02 · Trajectory
           </div>
-          <h1 style={{ margin: '0 0 clamp(14px,2vh,20px)', fontFamily: 'var(--font-serif), Georgia, serif', fontWeight: 400, fontSize: 'clamp(44px,8vw,108px)', lineHeight: 0.92, letterSpacing: '-.02em' }}>
+          <h1 style={{ margin: '0 0 clamp(12px,1.5vh,18px)', fontFamily: 'var(--font-serif), Georgia, serif', fontWeight: 400, fontSize: 'clamp(44px,8vw,108px)', lineHeight: 0.92, letterSpacing: '-.02em' }}>
             <span style={{ color: P.navy }}>The</span>
             <br />
             <em style={{ fontStyle: 'italic', color: P.cognac }}>Trajectory.</em>
