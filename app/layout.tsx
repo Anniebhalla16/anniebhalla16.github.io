@@ -39,9 +39,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${serif.variable} ${sans.variable}`}>
-      <body style={{ fontFamily: 'var(--font-sans), system-ui, sans-serif' }}>
+      <body
+        style={{
+          fontFamily: 'var(--font-sans), system-ui, sans-serif',
+          display: 'flex',
+          flexDirection: 'column',
+          minHeight: '100dvh',
+        }}
+      >
         <Navbar />
-        {children}
+        <div style={{ flex: 1 }}>{children}</div>
         <Footer />
       </body>
     </html>
