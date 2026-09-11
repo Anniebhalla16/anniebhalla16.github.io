@@ -12,7 +12,7 @@ export default function PageShell({ children, padX = true }: PageShellProps) {
       className="page-inner"
       style={{
         position: 'relative',
-        minHeight: '100vh',
+        minHeight: '100dvh',
         paddingTop: 'clamp(76px,11vh,110px)',
         paddingBottom: 'clamp(80px,10vh,120px)',
         ...(padX

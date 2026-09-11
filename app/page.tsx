@@ -28,7 +28,7 @@ export default function Home() {
         style={{
           position: 'absolute',
           inset: 0,
-          overflow: 'hidden',
+          overflow: 'clip',
           zIndex: 0,
           pointerEvents: 'none',
         }}
