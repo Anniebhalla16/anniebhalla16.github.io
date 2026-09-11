@@ -6,7 +6,7 @@ export default function Home() {
     <div
       style={{
         position: 'relative',
-        minHeight: '100dvh',
+        minHeight: '100vh',
         backgroundImage: 'url(/hero-bg.png)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
@@ -28,7 +28,7 @@ export default function Home() {
         style={{
           position: 'absolute',
           inset: 0,
-          overflow: 'clip',
+          overflow: 'hidden',
           zIndex: 0,
           pointerEvents: 'none',
         }}
