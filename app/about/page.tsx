@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import styles from './about.module.css'
 import { P } from '../../lib/palette'
 import PageShell from '../../components/ui/PageShell'
@@ -111,12 +112,15 @@ export default function AboutPage() {
 
           {/* Right: photo */}
           <div style={{ position: 'relative' }}>
-            <img
+            <Image
               src="/annie-about.png"
               alt="Annie Bhalla in flight suit in front of space capsule"
+              width={400}
+              height={533}
               className={styles.photo}
               style={{
                 width: '100%',
+                height: 'auto',
                 objectFit: 'cover',
                 objectPosition: 'center top',
                 borderRadius: 12,
