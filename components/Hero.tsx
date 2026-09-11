@@ -4,7 +4,7 @@ export default function Hero() {
       style={{
         position: 'relative',
         zIndex: 2,
-        minHeight: '100vh',
+        minHeight: '100dvh',
         boxSizing: 'border-box',
         padding: '0 clamp(28px,6vw,110px) clamp(110px,16vh,200px)',
         display: 'flex',
@@ -51,7 +51,7 @@ export default function Hero() {
               margin: 0,
               fontFamily: 'var(--font-serif), Georgia, serif',
               fontWeight: 400,
-              fontSize: 'clamp(58px,11.5vw,168px)',
+              fontSize: 'clamp(58px,20vw,168px)',
               lineHeight: 0.88,
               letterSpacing: '-.02em',
               color: '#e0e1dd',
