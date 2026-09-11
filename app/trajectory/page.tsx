@@ -97,6 +97,17 @@ const MAX_YEAR = 2029
 
 const MONTH_ABBR = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
 
+function starPath(r: number, innerRatio = 0.28, points = 4): string {
+  const step = Math.PI / points
+  let d = ''
+  for (let i = 0; i < 2 * points; i++) {
+    const radius = i % 2 === 0 ? r : r * innerRatio
+    const angle = i * step - Math.PI / 2
+    d += (i === 0 ? 'M' : 'L') + `${(radius * Math.cos(angle)).toFixed(2)},${(radius * Math.sin(angle)).toFixed(2)}`
+  }
+  return d + 'Z'
+}
+
 function clampRange(min: number, max: number): [number, number] {
   const range = max - min
   const lo = Math.max(MIN_YEAR, min)
@@ -368,6 +379,13 @@ export default function TrajectoryPage() {
               <clipPath id="chart-area">
                 <rect x={PL - 2} y={PT - 4} width={VW - PL - PR + 4} height={VH - PT - PB + 4} />
               </clipPath>
+              <filter id="star-glow" x="-80%" y="-80%" width="260%" height="260%">
+                <feGaussianBlur stdDeviation="2.5" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
             </defs>
             {/* Grid lines */}
             {[2,4,6,8,10].map(l => (
@@ -404,9 +422,28 @@ export default function TrajectoryPage() {
               const dimmed = filter !== null && filter !== e.cat
               return (
                 <g key={e.id} style={{ opacity: dimmed ? 0.15 : 1, transition: 'opacity 0.25s' }}>
-                  {selected === e.id && <circle cx={cx} cy={cy} r={15} fill="none" stroke={color} strokeWidth={1} opacity={0.35} />}
-                  <circle cx={cx} cy={cy} r={isHov ? 11 : 7.5} fill="none" stroke={color} strokeWidth={isHov ? 2 : 1.5} style={{ transition: 'r 0.15s' }} />
-                  <circle cx={cx} cy={cy} r={isHov ? 5 : 3} fill={color} style={{ transition: 'r 0.15s' }} />
+                  {/* Selection halo */}
+                  {selected === e.id && <circle cx={cx} cy={cy} r={17} fill="none" stroke={color} strokeWidth={1} opacity={0.3} />}
+                  {/* Ambient glow on hover */}
+                  {isHov && <circle cx={cx} cy={cy} r={13} fill={color} opacity={0.1} filter="url(#star-glow)" />}
+                  {/* Star shapes */}
+                  <g transform={`translate(${cx} ${cy})`}>
+                    {/* outer star (ring equivalent) */}
+                    <path
+                      d={starPath(isHov ? 11 : 7.5)}
+                      fill="none"
+                      stroke={color}
+                      strokeWidth={isHov ? 1.5 : 1.2}
+                      opacity={isHov ? 0.65 : 0.42}
+                    />
+                    {/* inner solid star */}
+                    <path
+                      d={starPath(isHov ? 5.5 : 3.5)}
+                      fill={color}
+                      filter={isHov ? 'url(#star-glow)' : undefined}
+                    />
+                  </g>
+                  {/* Hit area */}
                   <circle cx={cx} cy={cy} r={20} fill="transparent" style={{ cursor: 'pointer' }}
                     onMouseEnter={ev => { ev.stopPropagation(); setHovered(e.id) }}
                     onMouseLeave={() => setHovered(null)}
