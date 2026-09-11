@@ -36,7 +36,7 @@ export default function Navbar() {
           gap: 28,
           padding: '11px 26px',
           borderRadius: '0 0 999px 999px',
-          background: 'rgba(13,27,42,.72)',
+          background: 'rgba(13,27,42,.88)',
           border: '1px solid rgba(119,141,169,.22)',
           borderTop: 'none',
           backdropFilter: 'blur(14px)',
