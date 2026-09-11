@@ -117,8 +117,9 @@ export default function EntriesPage() {
         {/* ── Sidebar ── */}
         <aside className="entries-sidebar">
           <div className="entries-section-label"><SectionLabel index="03" label="Entries" /></div>
-          <h1 style={{ margin: '0 0 28px', fontFamily: 'var(--font-serif), Georgia, serif', fontWeight: 400, fontSize: 'clamp(28px,3vw,40px)', lineHeight: 1.05, letterSpacing: '-.02em' }}>
-            <span style={{ color: P.navy }}>The</span>{' '}
+          <h1 style={{ margin: '0 0 clamp(20px,2.5vh,32px)', fontFamily: 'var(--font-serif), Georgia, serif', fontWeight: 400, fontSize: 'clamp(40px,5vw,68px)', lineHeight: 0.92, letterSpacing: '-.02em' }}>
+            <span style={{ color: P.navy }}>The</span>
+            <br />
             <em style={{ fontStyle: 'italic', color: P.cognac }}>Log.</em>
           </h1>
 

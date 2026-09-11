@@ -1,11 +1,24 @@
+function weatherLabel(code: number): string {
+  if (code === 0) return 'Clear'
+  if (code <= 3) return 'Partly cloudy'
+  if (code <= 48) return 'Foggy'
+  if (code <= 55) return 'Drizzle'
+  if (code <= 65) return 'Rain'
+  if (code <= 77) return 'Snow'
+  if (code <= 82) return 'Showers'
+  return 'Stormy'
+}
+
 async function getWeather(): Promise<string> {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'}/api/weather`,
+      'https://api.open-meteo.com/v1/forecast?latitude=48.7758&longitude=9.1829&current=temperature_2m,weather_code',
       { next: { revalidate: 3600 } }
     )
     const data = await res.json()
-    return data.label ?? '—'
+    const temp = Math.round(data.current.temperature_2m)
+    const condition = weatherLabel(data.current.weather_code)
+    return `${temp}°C · ${condition}`
   } catch {
     return '—'
   }
