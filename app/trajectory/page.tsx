@@ -1,11 +1,11 @@
 'use client'
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { P } from '../../lib/palette'
-import PageShell from '../../components/ui/PageShell'
-import Watermark from '../../components/ui/Watermark'
-import SectionLabel from '../../components/ui/SectionLabel'
-import CategoryChip from '../../components/ui/CategoryChip'
+import CategoryChip from '../../components/ui/CategoryChip';
+import PageShell from '../../components/ui/PageShell';
+import SectionLabel from '../../components/ui/SectionLabel';
+import Watermark from '../../components/ui/Watermark';
+import { P } from '../../lib/palette';
 
 const CAT: Record<string, { label: string; color: string }> = {
   roles:     { label: 'Roles',      color: '#6BBFA3' },
@@ -21,6 +21,7 @@ type Cat = keyof typeof CAT
 interface Evt {
   id: string
   date: string
+  endDate?: string
   year: number
   level: number
   cat: Cat
@@ -31,33 +32,33 @@ interface Evt {
 
 const events: Evt[] = [
   {
-    id: 'suraasa', date: '07/2022', year: 2022.5, level: 3.5,
+    id: 'suraasa', date: '07/2022', endDate: '08/2023', year: 2022.5, level: 3.5,
     cat: 'roles', title: 'SDE Frontend → SDE2', org: 'Suraasa, India',
     detail: 'UI components for the Suraasa teacher training platform. Built a proctoring system using Web APIs for online assessments. Designed an event-driven calendar with react-fullcalendar.',
   },
   {
-    id: 'mercedes', date: '11/2023', year: 2023.83, level: 5,
+    id: 'mercedes', date: '11/2023', endDate: '09/2024', year: 2023.83, level: 5,
     cat: 'roles', title: 'Full Stack Developer', org: 'Mercedes-Benz AG, Sindelfingen',
     detail: 'Working student at the Virtual Reality Center (CoC VR/AR/XR). Built a complex web app end-to-end: Django + PostgreSQL backend, React/TypeScript/Tailwind frontend, RESTful APIs, booking system with role-based access, and Linux server setup with Nginx and Gunicorn.',
   },
   {
-    id: 'msc-start', date: '09/2023', year: 2023.7, level: 3,
+    id: 'msc-start', date: '04/2023', endDate: '12/2025', year: 2023.7, level: 3,
     cat: 'academic', title: 'MSc CS — Autonomous Systems', org: 'University of Stuttgart',
     detail: 'Started Masters programme. Focus on robotics, state estimation, and sensor fusion.',
   },
   {
-    id: 'sir-lab', date: '10/2024', year: 2024.75, level: 6,
+    id: 'sir-lab', date: '10/2024', endDate: '12/2024', year: 2024.75, level: 6,
     cat: 'research', title: 'Research Assistant — Semantic SLAM', org: 'SIR Lab, University of Stuttgart',
     detail: 'Set up and analysed Semantic SLAM pipelines — Kimera, Hydra, and Chronos — on EuRoC datasets and in-lab collected data on Linux with ROS at the Socially Intelligent Robotics Lab.',
   },
   {
-    id: 'dlr', date: '04/2025', year: 2025.25, level: 7.5,
+    id: 'dlr', date: '04/2025', endDate: '09/2025', year: 2025.25, level: 7.5,
     cat: 'research', title: 'Master Thesis — HyperLoop', org: 'DLR-RMC, Munich',
     detail: 'HyperLoop: developed a SLAM framework extending 3DGS SLAM (LoopSplat) with hyperspectral imaging to improve loop closure detection in planetary-like terrains. Evaluated on DLR Moon-Mars Outdoor Test Site datasets.',
   },
   {
-    id: 'msc-grad', date: '10/2025', year: 2025.75, level: 5,
-    cat: 'academic', title: 'MSc Completed — Grade 1.8', org: 'University of Stuttgart',
+    id: 'msc-grad', date: '09/2025', year: 2025.45, level: 5,
+    cat: 'academic', title: 'MSc Graduated — Grade 1.8', org: 'University of Stuttgart',
     detail: 'Graduated with distinction. Thesis on visual planetary navigation accepted.',
   },
   {
@@ -66,17 +67,17 @@ const events: Evt[] = [
     detail: "Remote Science Support Task Manager for the world's biggest analog space mission — 17 habitat sites running simultaneously across the globe. Managed the Daily Activity Matrix: live operational tracking across timezones, science teams, and mission timelines over eight days.",
   },
   {
-    id: 'sereact', date: '11/2025', year: 2025.83, level: 6.5,
+    id: 'sereact', date: '11/2025', endDate: 'Present', year: 2025.83, level: 6.5,
     cat: 'roles', title: 'Software Engineer', org: 'Sereact, Stuttgart',
     detail: 'Real-time monitoring, diagnostics, and analytics platform for robotic manipulation systems across sites in Europe and the US. Python FastAPI services on message queues, Next.js/TypeScript frontend, containerised on GCP Cloud Run and Vercel.',
   },
   {
-    id: 'aaka', date: '01/2026', year: 2026.05, level: 7.5,
+    id: 'aaka', date: '01/2026', endDate: '02/2026', year: 2026.05, level: 7.5,
     cat: 'space', title: 'Analog Astronaut — EVA Lead', org: "Aaka Space Studio (India's First Civilian Crew)",
     detail: "Selected for India's first civilian analog astronaut crew — a six-day simulated lunar surface mission in the extreme desert of Dholavira, Gujarat, one of Earth's closest analogs to lunar conditions. Served as EVA Lead: planned, coordinated, and executed surface operations under resource-constrained, isolated habitat conditions.",
   },
   {
-    id: 'oewf', date: '08/2026', year: 2026.58, level: 9.2,
+    id: 'oewf', date: '08/2026', endDate: 'Present', year: 2026.58, level: 9.2,
     cat: 'space', title: 'Flight Control Team Member', org: 'Austrian Space Forum (OeWF)',
     detail: 'In-training volunteer for AMADEE-2027, a Martian analog mission. Authoring Data Management Workflow Definitions and Guidelines; formalising operational data and communication interfaces across Flight Crew, Ground Operations, and Mission Support Center following ICD conventions consistent with ECSS space engineering practice.',
   },
@@ -430,7 +431,7 @@ export default function TrajectoryPage() {
                     {hovEvt.title}
                   </text>
                   <text x={clampedX} y={labelY + 16} textAnchor="middle" fill="rgba(224,225,221,.5)" fontSize={10} fontFamily="system-ui, sans-serif">
-                    {hovEvt.org} · {hovEvt.date}
+                    {hovEvt.org} · {hovEvt.date}{hovEvt.endDate ? ` – ${hovEvt.endDate}` : ''}
                   </text>
                 </g>
               )
@@ -482,7 +483,7 @@ export default function TrajectoryPage() {
                   <div style={{ paddingBottom: 12 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8, flexWrap: 'wrap' }}>
                       <CategoryChip label={CAT[e.cat]?.label} color={color} size="sm" />
-                      <span style={{ fontSize: 11, color: P.muted }}>{e.date}</span>
+                      <span style={{ fontSize: 11, color: P.muted }}>{e.date}{e.endDate ? ` – ${e.endDate}` : ''}</span>
                     </div>
                     <div style={{ fontSize: 'clamp(15px,1.2vw,17px)', fontWeight: 600, color: P.navy, marginBottom: 3 }}>{e.title}</div>
                     <div style={{ fontSize: 13, color, marginBottom: 10 }}>{e.org}</div>
