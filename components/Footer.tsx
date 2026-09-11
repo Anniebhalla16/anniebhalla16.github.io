@@ -29,7 +29,7 @@ const column: React.CSSProperties = {
 const directory = [
   { label: 'Trajectory', href: '/trajectory' },
   { label: 'Entries', href: '/entries' },
-  { label: 'Lab', href: '/lab' },
+  // { label: 'Lab', href: '/lab' },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' },
 ]
