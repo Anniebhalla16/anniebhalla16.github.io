@@ -89,6 +89,8 @@ export default function TrajectoryPage() {
   const svgRef = useRef<SVGSVGElement>(null)
   const dragRef = useRef<{ startX: number; startVMin: number; startVMax: number } | null>(null)
   const draggedRef = useRef(false)
+  const touchStartRef = useRef<{ x: number; vMin: number; vMax: number } | null>(null)
+  const pinchRef = useRef<{ dist: number; vMin: number; vMax: number; centerYear: number } | null>(null)
   const [hovered, setHovered] = useState<string | null>(null)
   const [selected, setSelected] = useState<string | null>(null)
   const [filter, setFilter] = useState<string | null>(null)
@@ -101,6 +103,70 @@ export default function TrajectoryPage() {
   }, [])
 
   const yp = (level: number) => PT + ((10 - level) / 9) * (VH - PT - PB)
+
+  const getTouchDist = (t: TouchList) => {
+    const dx = t[0].clientX - t[1].clientX
+    const dy = t[0].clientY - t[1].clientY
+    return Math.sqrt(dx * dx + dy * dy)
+  }
+
+  // Touch pan + pinch zoom — non-passive so preventDefault blocks page scroll
+  useEffect(() => {
+    const el = svgRef.current
+    if (!el) return
+
+    const onTouchStart = (e: TouchEvent) => {
+      if (e.touches.length === 1) {
+        const [vMin, vMax] = viewRangeRef.current
+        touchStartRef.current = { x: e.touches[0].clientX, vMin, vMax }
+        draggedRef.current = false
+        pinchRef.current = null
+      } else if (e.touches.length === 2) {
+        const [vMin, vMax] = viewRangeRef.current
+        const rect = el.getBoundingClientRect()
+        const centerClientX = (e.touches[0].clientX + e.touches[1].clientX) / 2
+        const svgX = ((centerClientX - rect.left) / rect.width) * VW
+        const centerYear = vMin + ((svgX - PL) / (VW - PL - PR)) * (vMax - vMin)
+        pinchRef.current = { dist: getTouchDist(e.touches), vMin, vMax, centerYear }
+        touchStartRef.current = null
+      }
+    }
+
+    const onTouchMove = (e: TouchEvent) => {
+      e.preventDefault()
+      if (e.touches.length === 1 && touchStartRef.current) {
+        const { x, vMin, vMax } = touchStartRef.current
+        const dx = e.touches[0].clientX - x
+        if (Math.abs(dx) > 4) draggedRef.current = true
+        const rect = el.getBoundingClientRect()
+        const chartPx = rect.width * (VW - PL - PR) / VW
+        const range = vMax - vMin
+        const yearDelta = -(dx * range) / chartPx
+        setViewRange(clampRange(vMin + yearDelta, vMin + yearDelta + range))
+      } else if (e.touches.length === 2 && pinchRef.current) {
+        const { dist: startDist, vMin, vMax, centerYear } = pinchRef.current
+        const scale = startDist / getTouchDist(e.touches)
+        const newRange = Math.max(0.3, Math.min(12, (vMax - vMin) * scale))
+        const ratio = (centerYear - vMin) / (vMax - vMin)
+        const newMin = centerYear - ratio * newRange
+        setViewRange(clampRange(newMin, newMin + newRange))
+      }
+    }
+
+    const onTouchEnd = () => {
+      touchStartRef.current = null
+      pinchRef.current = null
+    }
+
+    el.addEventListener('touchstart', onTouchStart, { passive: false })
+    el.addEventListener('touchmove', onTouchMove, { passive: false })
+    el.addEventListener('touchend', onTouchEnd)
+    return () => {
+      el.removeEventListener('touchstart', onTouchStart)
+      el.removeEventListener('touchmove', onTouchMove)
+      el.removeEventListener('touchend', onTouchEnd)
+    }
+  }, [])
 
   // Wheel zoom — must be non-passive to call preventDefault
   useEffect(() => {
@@ -151,6 +217,7 @@ export default function TrajectoryPage() {
   const handleDotClick = (id: string) => {
     if (draggedRef.current) return
     setSelected(id)
+    setHovered(id)
     document.getElementById(`evt-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
   }
 
@@ -245,7 +312,7 @@ export default function TrajectoryPage() {
             </span>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
               <span style={{ fontSize: 10, color: 'rgba(224,225,221,.25)', letterSpacing: '.06em' }}>
-                scroll to zoom · drag to pan
+                drag to pan · pinch to zoom
               </span>
               {/* Zoom controls */}
               <div style={{ display: 'flex', gap: 4 }}>
@@ -270,7 +337,7 @@ export default function TrajectoryPage() {
           <svg
             ref={svgRef}
             viewBox={`0 0 ${VW} ${VH}`}
-            style={{ width: '100%', height: 'auto', display: 'block', overflow: 'visible', cursor: isDragging ? 'grabbing' : 'grab', userSelect: 'none' }}
+            style={{ width: '100%', height: 'auto', display: 'block', overflow: 'visible', cursor: isDragging ? 'grabbing' : 'grab', userSelect: 'none', touchAction: 'none' }}
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
             onMouseUp={handleMouseUp}
