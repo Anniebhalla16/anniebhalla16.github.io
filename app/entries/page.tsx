@@ -112,26 +112,27 @@ export default function EntriesPage() {
       <Watermark text="The Log." position="bottom-right" size="clamp(80px,12vw,180px)" italic strokeOpacity={0.07} />
 
       {/* Layout: sidebar + main */}
-      <div style={{ display: 'grid', gridTemplateColumns: '220px 1fr', gap: 'clamp(32px,5vw,72px)', alignItems: 'start', paddingLeft: 'clamp(28px,6vw,110px)', paddingRight: 'clamp(28px,6vw,110px)', position: 'relative', zIndex: 1 }}>
+      <div className="entries-layout">
 
         {/* ── Sidebar ── */}
-        <aside style={{ position: 'sticky', top: 80 }}>
-          <SectionLabel index="03" label="Entries" />
+        <aside className="entries-sidebar">
+          <div className="entries-section-label"><SectionLabel index="03" label="Entries" /></div>
           <h1 style={{ margin: '0 0 28px', fontFamily: 'var(--font-serif), Georgia, serif', fontWeight: 400, fontSize: 'clamp(28px,3vw,40px)', lineHeight: 1.05, letterSpacing: '-.02em' }}>
             <span style={{ color: P.navy }}>The</span>{' '}
             <em style={{ fontStyle: 'italic', color: P.cognac }}>Log.</em>
           </h1>
 
-          <div style={{ height: 1, background: P.hairline, marginBottom: 24 }} />
+          <div className="entries-sidebar-divider" style={{ height: 1, background: P.hairline, marginBottom: 24 }} />
 
           {/* Category nav */}
-          <nav style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+          <nav className="entries-cat-nav">
             {Object.entries(CATS).map(([key, val]) => {
               const active = activeCat === key
               return (
                 <button
                   key={key}
                   onClick={() => setActiveCat(key)}
+                  className="entries-cat-btn"
                   style={{
                     display: 'flex',
                     alignItems: 'center',
@@ -152,7 +153,7 @@ export default function EntriesPage() {
                     </span>
                   </div>
                   {counts[key] && (
-                    <span style={{ fontSize: 11, color: active ? val.color : P.hairline, transition: 'color 0.2s', opacity: active ? 1 : 0.6 }}>
+                    <span className="entries-cat-count" style={{ fontSize: 11, color: active ? val.color : P.hairline, transition: 'color 0.2s', opacity: active ? 1 : 0.6 }}>
                       {counts[key]}
                     </span>
                   )}
@@ -161,9 +162,9 @@ export default function EntriesPage() {
             })}
           </nav>
 
-          <div style={{ height: 1, background: P.hairline, margin: '24px 0' }} />
+          <div className="entries-sidebar-divider" style={{ height: 1, background: P.hairline, margin: '24px 0' }} />
 
-          <p style={{ margin: 0, fontSize: 12, lineHeight: 1.7, color: P.muted, paddingLeft: 12 }}>
+          <p className="entries-sidebar-desc" style={{ margin: 0, fontSize: 12, lineHeight: 1.7, color: P.muted, paddingLeft: 12 }}>
             Writing on space, robotics, research, and whatever else is on my mind. Updated irregularly.
           </p>
         </aside>

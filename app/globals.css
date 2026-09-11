@@ -75,6 +75,7 @@ a:hover {
 
 /* ── Inner page parchment theme ───────────────────────── */
 .page-inner {
+  overflow-x: clip;
   background:
     radial-gradient(ellipse 70% 55% at 10% 5%,  #EBD9C2 0%, transparent 65%),
     radial-gradient(ellipse 55% 45% at 92% 92%, #E6DDD4 0%, transparent 55%),
@@ -90,6 +91,64 @@ a:hover {
   opacity: 0.028;
   pointer-events: none;
   z-index: 0;
+}
+
+
+/* ── Entries page layout ── */
+.entries-layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: clamp(32px, 5vw, 72px);
+  align-items: start;
+  padding-left: clamp(28px, 6vw, 110px);
+  padding-right: clamp(28px, 6vw, 110px);
+  position: relative;
+  z-index: 1;
+}
+
+.entries-layout > * {
+  min-width: 0;
+}
+
+.entries-sidebar {
+  position: sticky;
+  top: 80px;
+}
+
+.entries-cat-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+@media (max-width: 767px) {
+  .entries-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .entries-sidebar {
+    position: static;
+  }
+
+  .entries-cat-nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .entries-cat-btn {
+    flex-shrink: 0 !important;
+    white-space: nowrap;
+    border-radius: 999px !important;
+    padding: 7px 14px !important;
+    justify-content: flex-start !important;
+  }
+
+  .entries-cat-count { display: none; }
+  .entries-sidebar-desc { display: none; }
+  .entries-sidebar-divider { display: none; }
+  .entries-section-label { display: none; }
 }
 
 
