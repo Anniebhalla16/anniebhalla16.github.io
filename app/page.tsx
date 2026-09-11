@@ -6,7 +6,7 @@ export default function Home() {
     <div
       style={{
         position: 'relative',
-        minHeight: '100dvh',
+        minHeight: '100svh',
         backgroundImage: 'url(/hero-bg.png)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',

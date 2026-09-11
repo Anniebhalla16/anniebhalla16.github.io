@@ -4,7 +4,7 @@ export default function Hero() {
       style={{
         position: 'relative',
         zIndex: 2,
-        minHeight: '100dvh',
+        minHeight: '100svh',
         boxSizing: 'border-box',
         padding: '0 clamp(28px,6vw,110px) clamp(110px,16vh,200px)',
         display: 'flex',
