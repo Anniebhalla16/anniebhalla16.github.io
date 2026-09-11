@@ -9,11 +9,21 @@ export default function Home() {
         position: 'relative',
         minHeight: '100vh',
         overflow: 'hidden',
-        background:
-          'radial-gradient(1100px 640px at 72% 10%, #161a26 0%, rgba(10,11,16,0) 64%), radial-gradient(900px 560px at 16% 96%, #1a1c22 0%, rgba(8,9,13,0) 62%), linear-gradient(#090a0e, #07080b)',
+        backgroundImage: 'url(/hero-bg.png)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
         color: '#e8e4d9',
       }}
     >
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'rgba(7,8,11,0.62)',
+          zIndex: 0,
+        }}
+      />
       <StarField />
       <Navbar />
       <Hero />

@@ -25,7 +25,7 @@ const connect = [
   { label: 'GitHub', href: 'https://github.com/Anniebhalla16' },
   { label: 'LinkedIn', href: 'https://linkedin.com/in/anniebhalla' },
   { label: 'Scholar', href: '#scholar' },
-  { label: 'Email', href: 'mailto:annie.bhalla@sereact.ai' },
+  { label: 'Email', href: 'mailto:anniebhalla16@gmail.com' },
 ]
 
 export default function Footer() {
