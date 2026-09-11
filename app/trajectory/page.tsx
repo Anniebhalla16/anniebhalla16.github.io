@@ -221,7 +221,16 @@ export default function TrajectoryPage() {
         color: P.navy,
       }}
     >
+      {/* Watermark 1 — top, full-bleed centered */}
       <div aria-hidden style={{ position: 'absolute', top: 'clamp(50px,8vh,100px)', left: '50%', transform: 'translateX(-50%)', fontFamily: 'var(--font-serif), Georgia, serif', fontSize: 'clamp(160px,26vw,400px)', color: 'transparent', WebkitTextStroke: '1px rgba(160,113,79,.13)', letterSpacing: '-.01em', lineHeight: 1, userSelect: 'none', pointerEvents: 'none', whiteSpace: 'nowrap' }}>
+        AURORA
+      </div>
+      {/* Watermark 2 — mid-page, right-anchored, smaller */}
+      <div aria-hidden style={{ position: 'absolute', top: '52%', right: -30, fontFamily: 'var(--font-serif), Georgia, serif', fontSize: 'clamp(80px,14vw,200px)', fontStyle: 'italic', color: 'transparent', WebkitTextStroke: '1px rgba(160,113,79,.08)', letterSpacing: '-.02em', lineHeight: 1, userSelect: 'none', pointerEvents: 'none', whiteSpace: 'nowrap' }}>
+        Trajectory
+      </div>
+      {/* Watermark 3 — bottom, left-anchored */}
+      <div aria-hidden style={{ position: 'absolute', bottom: '8%', left: -20, fontFamily: 'var(--font-serif), Georgia, serif', fontSize: 'clamp(100px,18vw,260px)', color: 'transparent', WebkitTextStroke: '1px rgba(160,113,79,.07)', letterSpacing: '-.01em', lineHeight: 1, userSelect: 'none', pointerEvents: 'none', whiteSpace: 'nowrap' }}>
         AURORA
       </div>
 
@@ -244,7 +253,7 @@ export default function TrajectoryPage() {
 
         {/* Chart panel */}
         <div style={{
-          background: 'linear-gradient(160deg, #1e3350 0%, #132540 100%)',
+          background: 'linear-gradient(160deg, #020608 0%, #060e1a 100%)',
           borderRadius: 16,
           padding: 'clamp(20px,3vw,36px)',
           marginBottom: 'clamp(48px,8vh,80px)',
