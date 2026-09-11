@@ -31,7 +31,7 @@ export default function Hero() {
               fontSize: 12,
               letterSpacing: '.22em',
               textTransform: 'uppercase',
-              color: 'rgba(232,228,217,.55)',
+              color: '#778da9',
               marginBottom: 22,
             }}
           >
@@ -54,13 +54,13 @@ export default function Hero() {
               fontSize: 'clamp(58px,11.5vw,168px)',
               lineHeight: 0.88,
               letterSpacing: '-.02em',
-              color: '#f3efe4',
+              color: '#e0e1dd',
               textWrap: 'balance',
             }}
           >
             Annie
             <br />
-            <em style={{ fontStyle: 'italic', color: '#cfcabd' }}>Bhalla</em>
+            <em style={{ fontStyle: 'italic', color: '#778da9' }}>Bhalla</em>
           </h1>
         </div>
 
@@ -70,13 +70,13 @@ export default function Hero() {
               margin: '0 0 30px',
               fontSize: 'clamp(16px,1.25vw,19px)',
               lineHeight: 1.65,
-              color: 'rgba(232,228,217,.78)',
+              color: 'rgba(224,225,221,.78)',
               textWrap: 'pretty',
             }}
           >
-            Astrophysics, data, and the long habit of looking up. I keep an
-            observation log of the work — instruments, notes, plates, and the
-            odd late-night result.
+            Robotics software, autonomous navigation, and the pull of
+            unexplored terrain. I keep a log of the work — state estimators,
+            telemetry pipelines, mission ops, and the odd EVA.
           </p>
           <div
             style={{
@@ -87,15 +87,15 @@ export default function Hero() {
             }}
           >
             <a
-              href="/work"
+              href="/Logs"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: 10,
                 padding: '9px 18px',
                 borderRadius: 999,
-                background: '#f3efe4',
-                color: '#0a0c18',
+                background: '#e0e1dd',
+                color: '#0d1b2a',
                 fontSize: 14,
                 fontWeight: 500,
                 letterSpacing: '.01em',
@@ -108,7 +108,7 @@ export default function Hero() {
               href="/contact"
               style={{
                 fontSize: 14,
-                color: 'rgba(232,228,217,.55)',
+                color: '#778da9',
                 borderBottom: '1px solid rgba(232,228,217,.2)',
                 paddingBottom: 2,
               }}

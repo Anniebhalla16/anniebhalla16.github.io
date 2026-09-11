@@ -66,7 +66,7 @@ export default function StarField() {
           bottom: '-8vh',
           height: '58vh',
           background:
-            'linear-gradient(90deg, transparent, rgba(176,182,196,.10) 20%, rgba(198,204,216,.12) 50%, rgba(170,176,190,.09) 78%, transparent)',
+            'linear-gradient(90deg, transparent, rgba(217,189,197,.09) 20%, rgba(232,199,222,.11) 50%, rgba(188,175,156,.08) 78%, transparent)',
           filter: 'blur(70px)',
           animation: 'aurora 26s ease-in-out infinite',
         }}
@@ -79,7 +79,7 @@ export default function StarField() {
           bottom: '-16vh',
           height: '46vh',
           background:
-            'linear-gradient(90deg, transparent, rgba(212,192,168,.07) 32%, rgba(168,178,192,.08) 64%, transparent)',
+            'linear-gradient(90deg, transparent, rgba(188,175,156,.07) 32%, rgba(217,189,197,.08) 64%, transparent)',
           filter: 'blur(80px)',
           animation: 'aurora2 37s ease-in-out infinite',
         }}

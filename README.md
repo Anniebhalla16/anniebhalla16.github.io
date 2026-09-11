@@ -19,3 +19,7 @@ npm run dev
 ## Deployment
 
 Deployed to Vercel via GitHub Actions (`.github/workflows/ci-cd.yml`) on push to `main`.
+
+### Future Plans
+1. MCP grounded on 'Annie'
+2. Supabase Connection from where the data will come + security

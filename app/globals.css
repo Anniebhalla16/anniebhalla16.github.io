@@ -1,12 +1,29 @@
 :root {
-  --ink-900: #090a0e;
-  --ink-950: #07080b;
-  --ink-800: #0a0b11;
-  --paper: #f3efe4;
-  --paper-dim: #cfcabd;
-  --star-warm: #f4e2c4;
-  --star-cool: #c8cedb;
-  --hairline: rgba(232, 228, 217, 0.12);
+  /* Navy base */
+  --ink-950: #0d1b2a;
+  --ink-900: #1b263b;
+  --ink-700: #415a77;
+  --ink-500: #778da9;
+  --paper: #e0e1dd;
+  --paper-dim: #cbbeb3;
+
+  /* Pastel accents */
+  --muted-purple: #69626d;
+  --warm-tan: #bcaf9c;
+  --soft-grey: #cbbeb3;
+  --dusty-rose: #d9bdc5;
+  --soft-pink: #e8c7de;
+
+  /* Section identity colors */
+  --c-trajectory: #d9bdc5;
+  --c-entries: #e8c7de;
+  --c-lab: #778da9;
+  --c-about: #bcaf9c;
+  --c-contact: #cbbeb3;
+
+  --star-warm: #e8c7de;
+  --star-cool: #778da9;
+  --hairline: rgba(217, 189, 197, 0.14);
 }
 
 html {
@@ -18,11 +35,11 @@ body {
   margin: 0;
   padding: 0;
   background: var(--ink-950);
-  color: #e8e4d9;
+  color: var(--paper);
 }
 
 a {
-  color: #e8e4d9;
+  color: var(--paper);
   text-decoration: none;
 }
 a:hover {
@@ -53,6 +70,7 @@ a:hover {
   0%, 100% { transform: translate3d(3%, 1%, 0) scaleY(1.08); opacity: 0.28; }
   50% { transform: translate3d(-4%, -2%, 0) scaleY(0.92); opacity: 0.48; }
 }
+
 
 @media (prefers-reduced-motion: reduce) {
   *,

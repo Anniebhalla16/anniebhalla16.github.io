@@ -1,7 +1,7 @@
 const items = [
-  { label: 'Work', href: '/work' },
-  { label: 'Studies', href: '/studies' },
-  { label: 'Writing', href: '/writing' },
+  { label: 'Trajectory', href: '/trajectory' },
+  { label: 'Entries', href: '/entries' },
+  { label: 'Lab', href: '/lab' },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' },
 ]
@@ -24,8 +24,8 @@ export default function Navbar() {
           gap: 28,
           padding: '11px 26px',
           borderRadius: '0 0 999px 999px',
-          background: 'rgba(10,12,24,.55)',
-          border: '1px solid rgba(232,228,217,.14)',
+          background: 'rgba(13,27,42,.72)',
+          border: '1px solid rgba(119,141,169,.22)',
           borderTop: 'none',
           backdropFilter: 'blur(14px)',
           fontSize: 13.5,

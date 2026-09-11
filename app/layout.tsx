@@ -22,6 +22,7 @@ export const metadata: Metadata = {
   title: 'Annie Bhalla',
   description:
     'Astrophysics, data, and the long habit of looking up. An observation log kept in Munich.',
+  icons: { icon: '/favicon.png' },
   openGraph: {
     title: 'Annie Bhalla',
     description:

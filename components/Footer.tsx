@@ -1,8 +1,21 @@
+async function getWeather(): Promise<string> {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'}/api/weather`,
+      { next: { revalidate: 3600 } }
+    )
+    const data = await res.json()
+    return data.label ?? '—'
+  } catch {
+    return '—'
+  }
+}
+
 const heading: React.CSSProperties = {
   fontSize: 11,
   letterSpacing: '.22em',
   textTransform: 'uppercase',
-  color: 'rgba(232,228,217,.4)',
+  color: 'rgba(224,225,221,.4)',
   marginBottom: 20,
 }
 
@@ -14,9 +27,9 @@ const column: React.CSSProperties = {
 }
 
 const directory = [
-  { label: 'Work', href: '/work' },
-  { label: 'Studies', href: '/studies' },
-  { label: 'Writing', href: '/writing' },
+  { label: 'Trajectory', href: '/trajectory' },
+  { label: 'Entries', href: '/entries' },
+  { label: 'Lab', href: '/lab' },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' },
 ]
@@ -24,11 +37,12 @@ const directory = [
 const connect = [
   { label: 'GitHub', href: 'https://github.com/Anniebhalla16' },
   { label: 'LinkedIn', href: 'https://linkedin.com/in/anniebhalla' },
-  { label: 'Scholar', href: '#scholar' },
+  { label: 'Instagram', href: 'https://www.instagram.com/callsign.aurora/' },
   { label: 'Email', href: 'mailto:anniebhalla16@gmail.com' },
 ]
 
-export default function Footer() {
+export default async function Footer() {
+  const weather = await getWeather()
   return (
     <footer
       style={{
@@ -36,9 +50,9 @@ export default function Footer() {
         boxSizing: 'border-box',
         width: '100%',
         padding: 'clamp(48px,7vh,88px) clamp(28px,6vw,110px) 34px',
-        background: 'linear-gradient(#07080b, #0a0b11)',
-        borderTop: '1px solid rgba(232,228,217,.12)',
-        color: '#e8e4d9',
+        background: 'linear-gradient(#020608, #060e1a)',
+        borderTop: '1px solid rgba(224,225,221,.12)',
+        color: '#e0e1dd',
       }}
     >
       <div
@@ -55,7 +69,7 @@ export default function Footer() {
               fontFamily: 'var(--font-serif), Georgia, serif',
               fontSize: 26,
               letterSpacing: '-.01em',
-              color: '#f3efe4',
+              color: '#e0e1dd',
               marginBottom: 14,
             }}
           >
@@ -66,12 +80,12 @@ export default function Footer() {
               margin: '0 0 22px',
               fontSize: 15,
               lineHeight: 1.6,
-              color: 'rgba(232,228,217,.6)',
+              color: 'rgba(224,225,221,.6)',
               textWrap: 'pretty',
             }}
           >
-            Astrophysics, data, and the long habit of looking up. An
-            observation log kept in Munich.
+            Robotics software, autonomous navigation, and the pull of
+            unexplored terrain. Based in Stuttgart.
           </p>
           <div
             style={{
@@ -79,7 +93,7 @@ export default function Footer() {
               alignItems: 'center',
               gap: 10,
               fontSize: 13,
-              color: 'rgba(232,228,217,.55)',
+              color: 'rgba(224,225,221,.55)',
             }}
           >
             <span
@@ -91,7 +105,7 @@ export default function Footer() {
                 boxShadow: '0 0 8px 2px rgba(159,232,112,.5)',
               }}
             />
-            <span>Log open · replying within a day</span>
+            <span>Status nominal · comms open</span>
           </div>
         </div>
 
@@ -120,11 +134,10 @@ export default function Footer() {
         <div>
           <div style={heading}>Station</div>
           <div
-            style={{ ...column, fontSize: 14, color: 'rgba(232,228,217,.55)' }}
+            style={{ ...column, fontSize: 14, color: 'rgba(224,225,221,.55)' }}
           >
-            <span>Lat 48.14° N · Lon 11.58° E</span>
-            <span>Seeing 2.1″ · Clear</span>
-            <span>Last entry · 24 Aug 2026</span>
+            <span>Lat 48.78° N · Lon 9.18° E</span>
+            <span>{weather}</span>
           </div>
         </div>
       </div>
@@ -133,7 +146,7 @@ export default function Footer() {
         style={{
           marginTop: 'clamp(40px,6vh,72px)',
           paddingTop: 22,
-          borderTop: '1px solid rgba(232,228,217,.1)',
+          borderTop: '1px solid rgba(224,225,221,.1)',
           display: 'flex',
           justifyContent: 'space-between',
           gap: 20,
@@ -141,15 +154,15 @@ export default function Footer() {
           fontSize: 12,
           letterSpacing: '.14em',
           textTransform: 'uppercase',
-          color: 'rgba(232,228,217,.4)',
+          color: 'rgba(224,225,221,.4)',
         }}
       >
         <span>© 2026 Annie Bhalla</span>
         <div style={{ display: 'flex', gap: 28, flexWrap: 'wrap' }}>
-          <a href="#colophon" style={{ color: 'rgba(232,228,217,.4)' }}>
+          <a href="#colophon" style={{ color: 'rgba(224,225,221,.4)' }}>
             Colophon
           </a>
-          <a href="#rss" style={{ color: 'rgba(232,228,217,.4)' }}>
+          <a href="#rss" style={{ color: 'rgba(224,225,221,.4)' }}>
             RSS
           </a>
           <span>Built in Munich</span>
