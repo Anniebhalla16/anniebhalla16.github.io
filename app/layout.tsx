@@ -38,8 +38,9 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${serif.variable} ${sans.variable}`}>
+    <html lang="en" className={`${serif.variable} ${sans.variable}`} suppressHydrationWarning>
       <body
+        suppressHydrationWarning
         style={{
           fontFamily: 'var(--font-sans), system-ui, sans-serif',
           display: 'flex',
