@@ -87,7 +87,7 @@ export default function Hero() {
             }}
           >
             <a
-              href="/Logs"
+              href="/trajectory"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -101,7 +101,7 @@ export default function Hero() {
                 letterSpacing: '.01em',
               }}
             >
-              <span>Enter the log</span>
+              <span>See work</span>
               <span style={{ fontSize: 13, opacity: 0.6 }}>→</span>
             </a>
             <a

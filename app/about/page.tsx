@@ -1,15 +1,8 @@
 import styles from './about.module.css'
-
-// Parchment palette — shared with all inner pages
-const P = {
-  bg: '#F5EEE6',
-  card: '#FBF7F2',
-  navy: '#1B2640',
-  cognac: '#A0714F',
-  blue: '#4A7FA5',
-  muted: '#9B8B7A',
-  hairline: 'rgba(160,113,79,.15)',
-}
+import { P } from '../../lib/palette'
+import PageShell from '../../components/ui/PageShell'
+import Watermark from '../../components/ui/Watermark'
+import SectionLabel from '../../components/ui/SectionLabel'
 
 const roles = [
   {
@@ -58,39 +51,8 @@ const skills = [
 
 export default function AboutPage() {
   return (
-    <div
-      className="page-inner"
-      style={{
-        position: 'relative',
-        minHeight: '100vh',
-        paddingTop: 'clamp(76px,11vh,110px)',
-        paddingBottom: 'clamp(80px,10vh,120px)',
-        paddingLeft: 'clamp(28px,6vw,110px)',
-        paddingRight: 'clamp(28px,6vw,110px)',
-        boxSizing: 'border-box',
-        color: P.navy,
-      }}
-    >
-      {/* Watermark — bleeds from left */}
-      <div
-        aria-hidden
-        style={{
-          position: 'absolute',
-          bottom: -20,
-          right: 0,
-          fontFamily: 'var(--font-serif), Georgia, serif',
-          fontSize: 'clamp(100px,18vw,260px)',
-          fontStyle: 'normal',
-          color: 'transparent',
-          WebkitTextStroke: '1px rgba(160,113,79,.09)',
-          letterSpacing: '-.02em',
-          lineHeight: 1,
-          userSelect: 'none',
-          pointerEvents: 'none',
-        }}
-      >
-        About
-      </div>
+    <PageShell padX={true}>
+      <Watermark text="About" position="bottom-right" strokeOpacity={0.09} />
 
       <div style={{ position: 'relative', zIndex: 1 }}>
 
@@ -101,18 +63,7 @@ export default function AboutPage() {
         >
           {/* Left: label + headline + bio */}
           <div>
-            <div
-              style={{
-                fontSize: 11,
-                letterSpacing: '.26em',
-                textTransform: 'uppercase',
-                color: P.muted,
-                marginBottom: 20,
-                fontFamily: 'var(--font-sans), system-ui, sans-serif',
-              }}
-            >
-              04 · About
-            </div>
+            <SectionLabel index="04" label="About" />
             <h1
               style={{
                 margin: '0 0 clamp(20px,3vh,32px)',
@@ -225,6 +176,6 @@ export default function AboutPage() {
           ))}
         </div>
       </div>
-    </div>
+    </PageShell>
   )
 }

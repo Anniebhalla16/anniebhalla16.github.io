@@ -1,13 +1,6 @@
-// Parchment palette — warm editorial light theme for inner pages
-const P = {
-  bg: '#F5EEE6',
-  card: '#FBF7F2',
-  navy: '#1B2640',
-  cognac: '#A0714F',
-  blue: '#4A7FA5',
-  muted: '#9B8B7A',
-  hairline: 'rgba(160,113,79,.15)',
-}
+import { P } from '../../lib/palette'
+import PageShell from '../../components/ui/PageShell'
+import Watermark from '../../components/ui/Watermark'
 
 const openTo = [
   'Research collaborations & thesis projects',
@@ -44,40 +37,8 @@ const resumes = [
 
 export default function ContactPage() {
   return (
-    <div
-      className="page-inner"
-      style={{
-        position: 'relative',
-        minHeight: '100vh',
-        paddingTop: 'clamp(76px,11vh,110px)',
-        paddingBottom: 'clamp(80px,10vh,120px)',
-        paddingLeft: 'clamp(28px,6vw,110px)',
-        paddingRight: 'clamp(28px,6vw,110px)',
-        boxSizing: 'border-box',
-        color: P.navy,
-      }}
-    >
-      {/* Ghosted AURORA watermark */}
-      <div
-        aria-hidden
-        style={{
-          position: 'absolute',
-          bottom: -20,
-          right: 0,
-          fontFamily: 'var(--font-serif), Georgia, serif',
-          fontSize: 'clamp(100px,18vw,260px)',
-          fontStyle: 'normal',
-          color: 'transparent',
-          WebkitTextStroke: `1px rgba(160,113,79,.12)`,
-          letterSpacing: '-.02em',
-          lineHeight: 1,
-          userSelect: 'none',
-          pointerEvents: 'none',
-          whiteSpace: 'nowrap',
-        }}
-      >
-        AURORA
-      </div>
+    <PageShell padX={true}>
+      <Watermark text="AURORA" position="bottom-right" strokeOpacity={0.12} />
 
       <div style={{ position: 'relative', zIndex: 1 }}>
 
@@ -358,6 +319,6 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
-    </div>
+    </PageShell>
   )
 }

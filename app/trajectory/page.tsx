@@ -1,14 +1,11 @@
 'use client'
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-
-const P = {
-  navy: '#1B2640',
-  cognac: '#A0714F',
-  blue: '#4A7FA5',
-  muted: '#9B8B7A',
-  hairline: 'rgba(160,113,79,.15)',
-}
+import { P } from '../../lib/palette'
+import PageShell from '../../components/ui/PageShell'
+import Watermark from '../../components/ui/Watermark'
+import SectionLabel from '../../components/ui/SectionLabel'
+import CategoryChip from '../../components/ui/CategoryChip'
 
 const CAT: Record<string, { label: string; color: string }> = {
   roles:     { label: 'Roles',      color: '#6BBFA3' },
@@ -208,39 +205,19 @@ export default function TrajectoryPage() {
   const isZoomed = viewRange[0] !== DEFAULT_RANGE[0] || viewRange[1] !== DEFAULT_RANGE[1]
 
   return (
-    <div
-      className="page-inner"
-      style={{
-        position: 'relative',
-        minHeight: '100vh',
-        paddingTop: 'clamp(76px,11vh,110px)',
-        paddingBottom: 'clamp(80px,10vh,120px)',
-        paddingLeft: 'clamp(28px,6vw,110px)',
-        paddingRight: 'clamp(28px,6vw,110px)',
-        boxSizing: 'border-box',
-        color: P.navy,
-      }}
-    >
+    <PageShell padX={true}>
       {/* Watermark 1 — top, full-bleed centered */}
-      <div aria-hidden style={{ position: 'absolute', top: 'clamp(50px,8vh,100px)', left: '50%', transform: 'translateX(-50%)', fontFamily: 'var(--font-serif), Georgia, serif', fontSize: 'clamp(160px,26vw,400px)', color: 'transparent', WebkitTextStroke: '1px rgba(160,113,79,.13)', letterSpacing: '-.01em', lineHeight: 1, userSelect: 'none', pointerEvents: 'none', whiteSpace: 'nowrap' }}>
-        AURORA
-      </div>
-      {/* Watermark 2 — mid-page, right-anchored, smaller */}
-      <div aria-hidden style={{ position: 'absolute', top: '52%', right: -30, fontFamily: 'var(--font-serif), Georgia, serif', fontSize: 'clamp(80px,14vw,200px)', fontStyle: 'italic', color: 'transparent', WebkitTextStroke: '1px rgba(160,113,79,.08)', letterSpacing: '-.02em', lineHeight: 1, userSelect: 'none', pointerEvents: 'none', whiteSpace: 'nowrap' }}>
-        Trajectory
-      </div>
+      <Watermark text="AURORA" position="top-center" size="clamp(160px,26vw,400px)" strokeOpacity={0.13} />
+      {/* Watermark 2 — mid-page, right-anchored, smaller, italic */}
+      <Watermark text="Trajectory" position="mid-right" size="clamp(80px,14vw,200px)" italic strokeOpacity={0.08} />
       {/* Watermark 3 — bottom, left-anchored */}
-      <div aria-hidden style={{ position: 'absolute', bottom: '8%', left: -20, fontFamily: 'var(--font-serif), Georgia, serif', fontSize: 'clamp(100px,18vw,260px)', color: 'transparent', WebkitTextStroke: '1px rgba(160,113,79,.07)', letterSpacing: '-.01em', lineHeight: 1, userSelect: 'none', pointerEvents: 'none', whiteSpace: 'nowrap' }}>
-        AURORA
-      </div>
+      <Watermark text="AURORA" position="bottom-left" strokeOpacity={0.07} />
 
       <div style={{ position: 'relative', zIndex: 1 }}>
 
         {/* Header */}
         <div style={{ marginBottom: 'clamp(28px,4vh,48px)' }}>
-          <div style={{ fontSize: 11, letterSpacing: '.26em', textTransform: 'uppercase', color: P.muted, marginBottom: 20, fontFamily: 'var(--font-sans), system-ui, sans-serif' }}>
-            02 · Trajectory
-          </div>
+          <SectionLabel index="02" label="Trajectory" />
           <h1 style={{ margin: '0 0 clamp(12px,1.5vh,18px)', fontFamily: 'var(--font-serif), Georgia, serif', fontWeight: 400, fontSize: 'clamp(44px,8vw,108px)', lineHeight: 0.92, letterSpacing: '-.02em' }}>
             <span style={{ color: P.navy }}>The</span>
             <br />
@@ -417,9 +394,7 @@ export default function TrajectoryPage() {
                   </div>
                   <div style={{ paddingBottom: 12 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8, flexWrap: 'wrap' }}>
-                      <span style={{ fontSize: 10, letterSpacing: '.16em', textTransform: 'uppercase', color, padding: '3px 9px', border: `1px solid ${color}40`, borderRadius: 4 }}>
-                        {CAT[e.cat]?.label}
-                      </span>
+                      <CategoryChip label={CAT[e.cat]?.label} color={color} size="sm" />
                       <span style={{ fontSize: 11, color: P.muted }}>{e.date}</span>
                     </div>
                     <div style={{ fontSize: 'clamp(15px,1.2vw,17px)', fontWeight: 600, color: P.navy, marginBottom: 3 }}>{e.title}</div>
@@ -432,6 +407,6 @@ export default function TrajectoryPage() {
           </div>
         </div>
       </div>
-    </div>
+    </PageShell>
   )
 }
