@@ -10,7 +10,7 @@ export default function Navbar() {
   return (
     <div
       style={{
-        position: 'sticky',
+        position: 'fixed',
         top: 0,
         width: '100%',
         display: 'flex',

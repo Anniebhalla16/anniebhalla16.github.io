@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Instrument_Serif, Poppins } from 'next/font/google'
 import './globals.css'
+import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 
 const serif = Instrument_Serif({
@@ -39,6 +40,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${serif.variable} ${sans.variable}`}>
       <body style={{ fontFamily: 'var(--font-sans), system-ui, sans-serif' }}>
+        <Navbar />
         {children}
         <Footer />
       </body>

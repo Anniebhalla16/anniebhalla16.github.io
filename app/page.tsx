@@ -1,4 +1,3 @@
-import Navbar from '@/components/Navbar'
 import StarField from '@/components/StarField'
 import Hero from '@/components/Hero'
 
@@ -25,7 +24,6 @@ export default function Home() {
         }}
       />
       <StarField />
-      <Navbar />
       <Hero />
     </div>
   )
