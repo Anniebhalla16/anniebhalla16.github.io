@@ -49,7 +49,7 @@ export default function ContactPage() {
       style={{
         position: 'relative',
         minHeight: '100vh',
-        paddingTop: 'clamp(60px,8vh,90px)',
+        paddingTop: 'clamp(76px,11vh,110px)',
         paddingBottom: 'clamp(80px,10vh,120px)',
         paddingLeft: 'clamp(28px,6vw,110px)',
         paddingRight: 'clamp(28px,6vw,110px)',
