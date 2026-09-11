@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef, useEffect, useCallback, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 const P = {
   navy: '#1B2640',
@@ -91,7 +91,9 @@ export default function TrajectoryPage() {
   const viewRangeRef = useRef<[number, number]>(DEFAULT_RANGE)
   const svgRef = useRef<SVGSVGElement>(null)
   const dragRef = useRef<{ startX: number; startVMin: number; startVMax: number } | null>(null)
+  const draggedRef = useRef(false)
   const [hovered, setHovered] = useState<string | null>(null)
+  const [selected, setSelected] = useState<string | null>(null)
   const [filter, setFilter] = useState<string | null>(null)
   const [isDragging, setIsDragging] = useState(false)
 
@@ -128,6 +130,7 @@ export default function TrajectoryPage() {
     const rect = svgRef.current!.getBoundingClientRect()
     const [vMin, vMax] = viewRange
     dragRef.current = { startX: e.clientX, startVMin: vMin, startVMax: vMax }
+    draggedRef.current = false
     setIsDragging(true)
   }
 
@@ -135,6 +138,7 @@ export default function TrajectoryPage() {
     if (!dragRef.current) return
     const rect = svgRef.current!.getBoundingClientRect()
     const { startX, startVMin, startVMax } = dragRef.current
+    if (Math.abs(e.clientX - startX) > 4) draggedRef.current = true
     const chartPx = rect.width * (VW - PL - PR) / VW
     const yearsPerPx = (startVMax - startVMin) / chartPx
     const yearDelta = -(e.clientX - startX) * yearsPerPx
@@ -145,6 +149,12 @@ export default function TrajectoryPage() {
   const handleMouseUp = () => {
     dragRef.current = null
     setIsDragging(false)
+  }
+
+  const handleDotClick = (id: string) => {
+    if (draggedRef.current) return
+    setSelected(id)
+    document.getElementById(`evt-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
   }
 
   // X-axis ticks: years when wide, quarters when medium, months when zoomed
@@ -222,11 +232,13 @@ export default function TrajectoryPage() {
           <div style={{ fontSize: 11, letterSpacing: '.26em', textTransform: 'uppercase', color: P.muted, marginBottom: 20, fontFamily: 'var(--font-sans), system-ui, sans-serif' }}>
             02 · Trajectory
           </div>
-          <h1 style={{ margin: '0 0 clamp(14px,2vh,20px)', fontFamily: 'var(--font-serif), Georgia, serif', fontWeight: 400, fontSize: 'clamp(44px,8vw,108px)', lineHeight: 0.92, letterSpacing: '-.02em', color: P.navy }}>
-            The record.
+          <h1 style={{ margin: '0 0 clamp(14px,2vh,20px)', fontFamily: 'var(--font-serif), Georgia, serif', fontWeight: 400, fontSize: 'clamp(44px,8vw,108px)', lineHeight: 0.92, letterSpacing: '-.02em' }}>
+            <span style={{ color: P.navy }}>The</span>
+            <br />
+            <em style={{ fontStyle: 'italic', color: P.cognac }}>Trajectory.</em>
           </h1>
           <p style={{ margin: 0, fontSize: 'clamp(15px,1.1vw,17px)', lineHeight: 1.75, color: P.muted, maxWidth: 500 }}>
-            Every role, mission, paper, and build — plotted in sequence.
+            Every role, mission, paper, and build.
           </p>
         </div>
 
@@ -243,7 +255,7 @@ export default function TrajectoryPage() {
           {/* Chart top row */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16, gap: 12, flexWrap: 'wrap' }}>
             <span style={{ fontSize: 10, letterSpacing: '.22em', textTransform: 'uppercase', color: 'rgba(224,225,221,.35)' }}>
-              Every event, plotted
+              Every record
             </span>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
               <span style={{ fontSize: 10, color: 'rgba(224,225,221,.25)', letterSpacing: '.06em' }}>
@@ -278,6 +290,11 @@ export default function TrajectoryPage() {
             onMouseUp={handleMouseUp}
             onMouseLeave={handleMouseUp}
           >
+            <defs>
+              <clipPath id="chart-area">
+                <rect x={PL - 2} y={PT - 4} width={VW - PL - PR + 4} height={VH - PT - PB + 4} />
+              </clipPath>
+            </defs>
             {/* Grid lines */}
             {[2,4,6,8,10].map(l => (
               <line key={l} x1={PL} y1={yp(l)} x2={VW-PR} y2={yp(l)} stroke="rgba(119,141,169,.1)" strokeWidth={1} />
@@ -297,12 +314,13 @@ export default function TrajectoryPage() {
               )
             })}
 
-            {/* Connector polyline */}
+            {/* Connector polyline — clipped to chart area */}
             {linePts && (
-              <polyline points={linePts} fill="none" stroke="rgba(119,141,169,.3)" strokeWidth={1.5} strokeLinejoin="round" strokeLinecap="round" />
+              <polyline points={linePts} fill="none" stroke="rgba(119,141,169,.3)" strokeWidth={1.5} strokeLinejoin="round" strokeLinecap="round" clipPath="url(#chart-area)" />
             )}
 
-            {/* Dots */}
+            {/* Dots — clipped to chart area */}
+            <g clipPath="url(#chart-area)">
             {sortedEvts.map(e => {
               const cx = xp(e.year, viewRange)
               const cy = yp(e.level)
@@ -312,17 +330,20 @@ export default function TrajectoryPage() {
               const dimmed = filter !== null && filter !== e.cat
               return (
                 <g key={e.id} style={{ opacity: dimmed ? 0.15 : 1, transition: 'opacity 0.25s' }}>
+                  {selected === e.id && <circle cx={cx} cy={cy} r={15} fill="none" stroke={color} strokeWidth={1} opacity={0.35} />}
                   <circle cx={cx} cy={cy} r={isHov ? 11 : 7.5} fill="none" stroke={color} strokeWidth={isHov ? 2 : 1.5} style={{ transition: 'r 0.15s' }} />
                   <circle cx={cx} cy={cy} r={isHov ? 5 : 3} fill={color} style={{ transition: 'r 0.15s' }} />
                   <circle cx={cx} cy={cy} r={20} fill="transparent" style={{ cursor: 'pointer' }}
                     onMouseEnter={ev => { ev.stopPropagation(); setHovered(e.id) }}
                     onMouseLeave={() => setHovered(null)}
+                    onClick={() => handleDotClick(e.id)}
                   />
                 </g>
               )
             })}
+            </g>
 
-            {/* Hover label */}
+            {/* Hover label — intentionally outside clipPath so it can overflow */}
             {hovEvt && (() => {
               const cx = xp(hovEvt.year, viewRange)
               const cy = yp(hovEvt.level)
@@ -368,23 +389,24 @@ export default function TrajectoryPage() {
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 32 }}>
             <div style={{ fontSize: 10.5, letterSpacing: '.24em', textTransform: 'uppercase', color: P.muted, fontFamily: 'var(--font-sans), system-ui, sans-serif' }}>
-              {filter ? CAT[filter].label : 'All events'}
+              {filter ? CAT[filter].label : 'All records'}
             </div>
             <div style={{ fontSize: 11, color: P.muted, opacity: 0.6 }}>
-              {listEvents.length} {listEvents.length === 1 ? 'entry' : 'entries'}
+              {listEvents.length} {listEvents.length === 1 ? 'record' : 'records'}
             </div>
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             {listEvents.map((e, i) => {
               const color = CAT[e.cat]?.color ?? P.blue
+              const isSelected = selected === e.id
               return (
-                <div key={e.id} style={{ display: 'grid', gridTemplateColumns: '8px 1fr', gap: '0 20px' }}>
+                <div key={e.id} id={`evt-${e.id}`} style={{ display: 'grid', gridTemplateColumns: '8px 1fr', gap: '0 20px', borderRadius: 12, transition: 'background 0.3s, box-shadow 0.3s', background: isSelected ? `${color}0c` : 'transparent', boxShadow: isSelected ? `inset 0 0 0 1px ${color}28` : 'none', padding: '12px 16px', margin: '0 -16px' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 5 }}>
                     <div style={{ width: 8, height: 8, borderRadius: '50%', background: color, flexShrink: 0 }} />
                     {i < listEvents.length - 1 && <div style={{ width: 1, flex: 1, background: P.hairline, marginTop: 6, minHeight: 32 }} />}
                   </div>
-                  <div style={{ paddingBottom: 36 }}>
+                  <div style={{ paddingBottom: 12 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8, flexWrap: 'wrap' }}>
                       <span style={{ fontSize: 10, letterSpacing: '.16em', textTransform: 'uppercase', color, padding: '3px 9px', border: `1px solid ${color}40`, borderRadius: 4 }}>
                         {CAT[e.cat]?.label}
