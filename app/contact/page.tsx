@@ -66,7 +66,7 @@ export default function ContactPage() {
             >
               Open
               <br />
-              <em style={{ fontStyle: 'italic', color: P.cognac }}>channel.</em>
+              <em style={{ fontStyle: 'italic', color: P.cognac }}>comms.</em>
             </h1>
 
             <p
