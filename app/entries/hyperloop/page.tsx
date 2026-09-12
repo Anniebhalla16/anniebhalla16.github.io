@@ -1,7 +1,7 @@
 'use client'
 
 import { P } from '../../../lib/palette'
-import PageShell from '../../../components/ui/PageShell'
+import EntrySidebarWrapper from '../../../components/ui/EntrySidebarWrapper'
 import SectionLabel from '../../../components/ui/SectionLabel'
 import CategoryChip from '../../../components/ui/CategoryChip'
 
@@ -87,7 +87,7 @@ function ResultRow({ exp, config, ate, highlight }: {
 
 export default function HyperLoopEntry() {
   return (
-    <PageShell centered>
+    <EntrySidebarWrapper activeCat="research">
 
       {/* ── Header ── */}
       <div style={{ marginBottom: 12 }}>
@@ -344,6 +344,6 @@ export default function HyperLoopEntry() {
         </div>
       </div>
 
-    </PageShell>
+    </EntrySidebarWrapper>
   )
 }

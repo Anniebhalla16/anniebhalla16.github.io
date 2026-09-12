@@ -1,11 +1,11 @@
 'use client'
 
 import { P } from '../../../../lib/palette'
-import PageShell from '../../../../components/ui/PageShell'
+import EntrySidebarWrapper from '../../../../components/ui/EntrySidebarWrapper'
 
 export default function LoopClosurePage() {
   return (
-    <PageShell centered>
+    <EntrySidebarWrapper activeCat="research">
 
       {/* ── Breadcrumb ── */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 28, fontSize: 12, color: P.muted }}>
@@ -97,6 +97,6 @@ export default function LoopClosurePage() {
         </a>
       </div>
 
-    </PageShell>
+    </EntrySidebarWrapper>
   )
 }

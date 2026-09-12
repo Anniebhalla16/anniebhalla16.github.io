@@ -137,36 +137,67 @@ export default function EntriesPage() {
           <nav className="entries-cat-nav">
             {Object.entries(CATS).map(([key, val]) => {
               const active = activeCat === key
-              return (
-                <button
-                  key={key}
-                  onClick={() => setActiveCat(key)}
-                  className="entries-cat-btn"
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '9px 12px',
-                    borderRadius: 8,
-                    border: 'none',
-                    background: active ? `${val.color}14` : 'transparent',
-                    cursor: 'pointer',
-                    textAlign: 'left',
-                    transition: 'background 0.2s',
-                  }}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <span style={{ width: 6, height: 6, borderRadius: '50%', background: active ? val.color : P.hairline, flexShrink: 0, transition: 'background 0.2s' }} />
-                    <span style={{ fontSize: 13, color: active ? val.color : P.muted, fontWeight: active ? 600 : 400, transition: 'color 0.2s' }}>
-                      {val.label}
-                    </span>
-                  </div>
-                  {counts[key] && (
+              const catEntries = entries.filter(e => e.cat === key)
+
+              // "All Entries" — plain filter button, no expand
+              if (key === 'all') {
+                return (
+                  <button
+                    key={key}
+                    onClick={() => setActiveCat('all')}
+                    className="entries-cat-btn"
+                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '9px 12px', borderRadius: 8, border: 'none', background: active ? `${val.color}14` : 'transparent', cursor: 'pointer', textAlign: 'left', transition: 'background 0.2s', width: '100%' }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                      <span style={{ width: 6, height: 6, borderRadius: '50%', background: active ? val.color : P.hairline, flexShrink: 0, transition: 'background 0.2s' }} />
+                      <span style={{ fontSize: 13, color: active ? val.color : P.muted, fontWeight: active ? 600 : 400, transition: 'color 0.2s' }}>{val.label}</span>
+                    </div>
                     <span className="entries-cat-count" style={{ fontSize: 11, color: active ? val.color : P.hairline, transition: 'color 0.2s', opacity: active ? 1 : 0.6 }}>
                       {counts[key]}
                     </span>
+                  </button>
+                )
+              }
+
+              // Other categories — expand on click to show entries
+              return (
+                <div key={key}>
+                  <button
+                    onClick={() => setActiveCat(active ? 'all' : key)}
+                    className="entries-cat-btn"
+                    style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '9px 12px', borderRadius: 8, border: 'none', background: active ? `${val.color}14` : 'transparent', cursor: 'pointer', textAlign: 'left', transition: 'background 0.2s', width: '100%' }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                      <span style={{ width: 6, height: 6, borderRadius: '50%', background: active ? val.color : P.hairline, flexShrink: 0, transition: 'background 0.2s' }} />
+                      <span style={{ fontSize: 13, color: active ? val.color : P.muted, fontWeight: active ? 600 : 400, transition: 'color 0.2s' }}>{val.label}</span>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                      {counts[key] && (
+                        <span className="entries-cat-count" style={{ fontSize: 11, color: active ? val.color : P.hairline, opacity: active ? 1 : 0.6 }}>
+                          {counts[key]}
+                        </span>
+                      )}
+                      <span style={{ fontSize: 10, color: active ? val.color : P.hairline, opacity: 0.7, transition: 'transform 0.2s', display: 'inline-block', transform: active ? 'rotate(90deg)' : 'none' }}>›</span>
+                    </div>
+                  </button>
+
+                  {/* Expanded entry list */}
+                  {active && catEntries.length > 0 && (
+                    <div style={{ paddingLeft: 22, marginTop: 4, marginBottom: 4, display: 'flex', flexDirection: 'column', gap: 1 }}>
+                      {catEntries.map(e => (
+                        <a
+                          key={e.slug}
+                          href={`/entries/${e.slug}`}
+                          style={{ fontSize: 12, color: P.muted, textDecoration: 'none', padding: '5px 8px', borderRadius: 6, lineHeight: 1.4, display: 'block', transition: 'color 0.15s, background 0.15s' }}
+                          onMouseEnter={ev => { (ev.currentTarget as HTMLElement).style.color = val.color; (ev.currentTarget as HTMLElement).style.background = `${val.color}0C` }}
+                          onMouseLeave={ev => { (ev.currentTarget as HTMLElement).style.color = P.muted; (ev.currentTarget as HTMLElement).style.background = 'transparent' }}
+                        >
+                          {e.title}
+                        </a>
+                      ))}
+                    </div>
                   )}
-                </button>
+                </div>
               )
             })}
           </nav>
