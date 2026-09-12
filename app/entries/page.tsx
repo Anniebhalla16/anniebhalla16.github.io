@@ -28,6 +28,15 @@ interface Entry {
 
 const entries: Entry[] = [
   {
+    slug: 'hyperloop',
+    title: 'HyperLoop: hyperspectral loop closure for planetary SLAM',
+    cat: 'research',
+    date: 'Oct 2026',
+    excerpt: 'Building the first SLAM system that fuses hyperspectral and RGB-D sensing for loop closure on planetary terrain. The null result was the finding: Red-NIR can\'t see what matters. SWIR is next.',
+    readTime: 12,
+    featured: true,
+  },
+  {
     slug: 'eva-analog-lunar-mission',
     title: 'What it actually feels like to do an EVA',
     cat: 'space',
@@ -51,7 +60,6 @@ const entries: Entry[] = [
     date: 'Nov 2025',
     excerpt: 'Two years at DLR building a visual navigation system that fuses hyperspectral and RGB-D data. How 3D Gaussian Splatting changed our approach — and where it still fails.',
     readTime: 12,
-    featured: true,
   },
   {
     slug: 'telemetry-sereact-robots',

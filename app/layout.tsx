@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   title: 'Annie Bhalla',
   description:
     'Robotics engineer, analog astronaut, and navigator of unexplored terrain. Based in Stuttgart.',
-  icons: { icon: '/favicon.png' },
+  icons: { icon: '/favicon.svg' },
   openGraph: {
     title: 'Annie Bhalla',
     description:
