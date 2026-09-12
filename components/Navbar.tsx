@@ -27,7 +27,7 @@ export default function Navbar() {
         width: '100%',
         display: 'flex',
         justifyContent: 'center',
-        zIndex: 50,
+        zIndex: 1000,
       }}
     >
       <nav
@@ -43,7 +43,7 @@ export default function Navbar() {
           fontSize: 13.5,
           letterSpacing: '.01em',
           transform: isInner && !open ? 'translateY(calc(-100% + 14px))' : 'translateY(0)',
-          transition: 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)',
+          transition: isInner ? 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1)' : 'none',
         }}
       >
         {items.map((i) => (
