@@ -35,4 +35,12 @@ export const entries: Entry[] = [
     excerpt: "A robot's worst enemy is drift. Loop closure detection is how SLAM systems recognise a previously seen place and correct accumulated error — in this case, on a simulated planetary surface.",
     readTime: 5,
   },
+  {
+    slug: 'hyperspectral-imaging',
+    title: 'Why Rocks Need More Than RGB: Hyperspectral Imaging',
+    cat: 'research',
+    date: 'Oct 2026',
+    excerpt: 'Your phone camera sees 3 wavelengths. A hyperspectral camera sees hundreds. On planetary surfaces, that difference is what separates useless from indispensable.',
+    readTime: 6,
+  },
 ]
