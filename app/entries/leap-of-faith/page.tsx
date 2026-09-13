@@ -1,5 +1,3 @@
-'use client'
-
 import { P } from '../../../lib/palette'
 import EntryBreadcrumb from '../../../components/ui/EntryBreadcrumb'
 

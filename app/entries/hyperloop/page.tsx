@@ -1,5 +1,3 @@
-'use client'
-
 import CategoryChip from '../../../components/ui/CategoryChip'
 import SectionLabel from '../../../components/ui/SectionLabel'
 import EntrySectionTitle from '../../../components/ui/EntrySectionTitle'
@@ -125,12 +123,10 @@ export default function HyperLoopEntry() {
 
         {/* GIF */}
         <div style={{ margin: '20px 0', maxWidth: 480, borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}` }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/lc_animation.gif"
-            alt="Loop closure correction — 27 PGO iterations from 12.69 cm to 4.90 cm RMSE, real MMOTS-WS E3 SIFT-VLAD data"
-            style={{ width: '100%', display: 'block' }}
-          />
+          <video autoPlay loop muted playsInline style={{ width: '100%', display: 'block' }}>
+            <source src="/lc_animation.webm" type="video/webm" />
+            <source src="/lc_animation.mp4" type="video/mp4" />
+          </video>
           <div style={{ padding: '8px 12px', borderTop: `1px solid ${P.hairline}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
             <span style={{ fontSize: 11, color: P.muted }}>
               RMSE 12.69 cm → 4.90 cm · 27 iterations
@@ -151,7 +147,7 @@ export default function HyperLoopEntry() {
         {/* Data frame comparison */}
         <div style={{ maxWidth: 520, borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}` }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/fig_data.png" alt="RGB, Depth, and HSI frames from the same scene — terrain appears identical in RGB" style={{ width: '100%', display: 'block' }} />
+          <img src="/fig_data.webp" alt="RGB, Depth, and HSI frames from the same scene — terrain appears identical in RGB" loading="lazy" style={{ width: '100%', display: 'block' }} />
           <div style={{ padding: '8px 14px', borderTop: `1px solid ${P.hairline}`, fontSize: 11, color: P.muted }}>
             Same scene — three modalities. RGB and Depth see visually identical terrain; HSI encodes spectral identity.
           </div>
@@ -177,7 +173,7 @@ export default function HyperLoopEntry() {
         {/* Spectra chart */}
         <div style={{ maxWidth: 460, borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}`, marginTop: 20 }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/fig_spectra.png" alt="Spectral signatures of planetary terrain — Red-NIR nearly identical, SWIR discriminable" style={{ width: '100%', display: 'block' }} />
+          <img src="/fig_spectra.webp" alt="Spectral signatures of planetary terrain — Red-NIR nearly identical, SWIR discriminable" loading="lazy" style={{ width: '100%', display: 'block' }} />
           <div style={{ padding: '8px 14px', borderTop: `1px solid ${P.hairline}`, fontSize: 11, color: P.muted }}>
             Red-NIR (600–860 nm) sensors cannot separate rock types. Diagnostic features only appear in SWIR (900–2500 nm).
           </div>
@@ -223,14 +219,14 @@ export default function HyperLoopEntry() {
         <div style={{ display: 'flex', gap: 12, margin: '20px 0 0', alignItems: 'start', flexWrap: 'wrap' }}>
           <div style={{ flex: '1 1 200px', maxWidth: 340, borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}` }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/fig_siftvlad.png" alt="SIFT-VLAD RGB descriptor pipeline" style={{ width: '100%', display: 'block' }} />
+            <img src="/fig_siftvlad.webp" alt="SIFT-VLAD RGB descriptor pipeline" loading="lazy" style={{ width: '100%', display: 'block' }} />
             <div style={{ padding: '7px 12px', borderTop: `1px solid ${P.hairline}`, fontSize: 11, color: P.muted }}>
               RGB branch: SIFT → VLAD descriptor
             </div>
           </div>
           <div style={{ flex: '1 1 160px', maxWidth: 220, borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}` }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/fig_hsi_descriptor.png" alt="HSI descriptor pipeline — PCA, BoSW, PCAK-VLAD" style={{ width: '100%', display: 'block' }} />
+            <img src="/fig_hsi_descriptor.webp" alt="HSI descriptor pipeline — PCA, BoSW, PCAK-VLAD" loading="lazy" style={{ width: '100%', display: 'block' }} />
             <div style={{ padding: '7px 12px', borderTop: `1px solid ${P.hairline}`, fontSize: 11, color: P.muted }}>
               HSI branch: PCA → BoSW / PCAK-VLAD
             </div>
@@ -240,7 +236,7 @@ export default function HyperLoopEntry() {
         {/* Full pipeline diagram */}
         <div style={{ maxWidth: 560, borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}`, margin: '16px 0 0' }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/fig_pipeline.png" alt="HyperLoop pipeline — RGB and HSI branches, decision-level fusion, PGO" style={{ width: '100%', display: 'block' }} />
+          <img src="/fig_pipeline.webp" alt="HyperLoop pipeline — RGB and HSI branches, decision-level fusion, PGO" loading="lazy" style={{ width: '100%', display: 'block' }} />
           <div style={{ padding: '8px 14px', borderTop: `1px solid ${P.hairline}`, fontSize: 11, color: P.muted }}>
             Full pipeline: RGB-D → parallel RGB + HSI descriptors → fusion gate → PGO
           </div>
@@ -314,7 +310,7 @@ export default function HyperLoopEntry() {
         {/* ATE bar chart — constrained width, nearly square */}
         <div style={{ borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}`, margin: '24px auto 16px', maxWidth: 560 }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/fig_ate.png" alt="ATE RMSE comparison across experiments — E3 SIFT-VLAD best at 4.95 cm" style={{ width: '100%', display: 'block' }} />
+          <img src="/fig_ate.webp" alt="ATE RMSE comparison across experiments — E3 SIFT-VLAD best at 4.95 cm" loading="lazy" style={{ width: '100%', display: 'block' }} />
           <div style={{ padding: '8px 14px', borderTop: `1px solid ${P.hairline}`, fontSize: 11, color: P.muted }}>
             Aligned ATE RMSE. E3 SIFT-VLAD (4.95 cm) is 43% below the E2 NetVLAD baseline (8.81 cm).
           </div>
@@ -323,7 +319,7 @@ export default function HyperLoopEntry() {
         {/* Loop closure retrieval precision/recall/F1 */}
         <div style={{ maxWidth: 480, borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}`, marginBottom: 24 }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/fig_lc.png" alt="Loop closure retrieval — Precision, Recall, F1 across all experiments" style={{ width: '100%', display: 'block' }} />
+          <img src="/fig_lc.webp" alt="Loop closure retrieval — Precision, Recall, F1 across all experiments" loading="lazy" style={{ width: '100%', display: 'block' }} />
           <div style={{ padding: '8px 14px', borderTop: `1px solid ${P.hairline}`, fontSize: 11, color: P.muted }}>
             E4-B (SIFT-VLAD + BoSW, Strict-AND) achieves highest precision (0.24).
           </div>

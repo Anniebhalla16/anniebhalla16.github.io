@@ -18,7 +18,8 @@ export default function Figure({ src, alt, caption, maxWidth, margin = '0' }: Fi
     >
       <div style={{ borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}` }}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={src} alt={alt} style={{ width: '100%', display: 'block' }} />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={src} alt={alt} loading="lazy" style={{ width: '100%', display: 'block' }} />
       </div>
       {caption && (
         <figcaption style={{

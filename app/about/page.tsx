@@ -113,7 +113,7 @@ export default function AboutPage() {
           {/* Right: photo */}
           <div style={{ position: 'relative' }}>
             <Image
-              src="/annie-about.png"
+              src="/annie-about.webp"
               alt="Annie Bhalla in flight suit in front of space capsule"
               width={400}
               height={533}

@@ -1,5 +1,3 @@
-'use client'
-
 import React from 'react'
 import { P } from '../../lib/palette'
 import SectionLabel from './SectionLabel'

@@ -7,7 +7,7 @@ export default function Home() {
       style={{
         position: 'relative',
         minHeight: '100dvh',
-        backgroundImage: 'url(/hero-bg.png)',
+        backgroundImage: 'url(/hero-bg.webp)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',

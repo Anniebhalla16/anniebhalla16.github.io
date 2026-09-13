@@ -1,5 +1,3 @@
-'use client'
-
 import { P } from '../../../lib/palette'
 import EntryBreadcrumb from '../../../components/ui/EntryBreadcrumb'
 
@@ -26,12 +24,17 @@ export default function LoopClosurePage() {
 
       {/* ── Loop closure animation ── */}
       <div style={{ borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}`, marginBottom: 10 }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/lc_animation.gif"
-          alt="Loop closure correction — 27 PGO iterations converging from 12.69 cm to 4.90 cm RMSE on real MMOTS-WS data"
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
           style={{ width: '100%', display: 'block' }}
-        />
+          aria-label="Loop closure correction — 27 PGO iterations converging from 12.69 cm to 4.90 cm RMSE on real MMOTS-WS data"
+        >
+          <source src="/lc_animation.webm" type="video/webm" />
+          <source src="/lc_animation.mp4" type="video/mp4" />
+        </video>
       </div>
       <p style={{ margin: '0 0 48px', fontSize: 11, color: P.muted }}>
         E3 · SIFT-VLAD · RGB only · no HSI fusion · MMOTS-WS · 27 iterations · RMSE 12.69 cm → 4.90 cm
