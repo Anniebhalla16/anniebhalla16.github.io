@@ -68,7 +68,7 @@ export default function LeapOfFaithPage() {
         <p style={{ margin: '0 0 24px' }}>
           Of course, the path over these three years was never a straight line of constant yesses
           and celebrations. It has been a delicate rhythm of low points and high points. But
-          that's the beauty of life — the universe has a way of leveling out the difficult phases
+          that&apos;s the beauty of life — the universe has a way of leveling out the difficult phases
           with the rewarding ones. I too failed so many times, fell down, but learnt the quiet
           art of getting back up, dusting myself off, and putting myself out there anyway, even
           when doubts crept in.
@@ -88,7 +88,7 @@ export default function LeapOfFaithPage() {
           But the truth is, I am nowhere near the final destination. But what even is a final
           destination? We are all a constant work in progress, and the horizon is always moving.
           There is no fixed stopping point, no ultimate arrival — only the next frontier. Three
-          years don't define the completion of who I want to become, but they have given me the
+          years don&apos;t define the completion of who I want to become, but they have given me the
           beautiful momentum to keep exploring. ❤️
         </p>
 

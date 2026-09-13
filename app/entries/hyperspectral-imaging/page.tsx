@@ -327,7 +327,7 @@ export default function HyperspectralPage() {
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 24 }}>
         <CategoryChip label="Research" color={P.blue} size="sm" />
-        <span style={{ fontSize: 11, color: P.muted }}>Oct 2026 · Master's Thesis Extract</span>
+        <span style={{ fontSize: 11, color: P.muted }}>Oct 2026 · Master&apos;s Thesis Extract</span>
       </div>
 
       <h1 style={{
@@ -340,7 +340,7 @@ export default function HyperspectralPage() {
         <em style={{ color: P.cognac }}>Hyperspectral Imaging</em> for Planetary SLAM
       </h1>
       <p style={{ margin: '0 0 44px', fontSize: 13, color: P.muted }}>
-        Annie Bhalla · University of Stuttgart · DLR Oberpfaffenhofen · Master's Thesis, 2025
+        Annie Bhalla · University of Stuttgart · DLR Oberpfaffenhofen · Master&apos;s Thesis, 2025
       </p>
 
       {/* ── Hook ── */}
