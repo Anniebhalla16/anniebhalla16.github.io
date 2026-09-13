@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import CategoryChip from '../../components/ui/CategoryChip';
 import PageShell from '../../components/ui/PageShell';
 import SectionLabel from '../../components/ui/SectionLabel';
@@ -28,6 +29,7 @@ interface Evt {
   title: string
   org: string
   detail: string
+  entrySlug?: string
 }
 
 const events: Evt[] = [
@@ -55,6 +57,7 @@ const events: Evt[] = [
     id: 'dlr', date: '04/2025', endDate: '09/2025', year: 2025.25, level: 7.5,
     cat: 'research', title: 'Master Thesis — HyperLoop', org: 'DLR-RMC, Munich',
     detail: 'HyperLoop: developed a SLAM framework extending 3DGS SLAM (LoopSplat) with hyperspectral imaging to improve loop closure detection in planetary-like terrains. Evaluated on DLR Moon-Mars Outdoor Test Site datasets.',
+    entrySlug: 'hyperloop',
   },
   {
     id: 'msc-grad', date: '09/2025', year: 2025.45, level: 5,
@@ -85,6 +88,7 @@ const events: Evt[] = [
     id: 'iac', date: '10/2026', year: 2026.78, level: 8.5,
     cat: 'research', title: 'IAC 2026 — Paper Presentation', org: 'International Astronautical Congress',
     detail: 'Presenting visual navigation research for planetary surfaces using 3DGS SLAM and hyperspectral fusion.',
+    entrySlug: 'hyperloop',
   },
 ]
 
@@ -116,6 +120,7 @@ function clampRange(min: number, max: number): [number, number] {
 }
 
 export default function TrajectoryPage() {
+  const router = useRouter()
   const [viewRange, setViewRange] = useState<[number, number]>(DEFAULT_RANGE)
   const viewRangeRef = useRef<[number, number]>(DEFAULT_RANGE)
   const svgRef = useRef<SVGSVGElement>(null)
@@ -512,7 +517,12 @@ export default function TrajectoryPage() {
               const color = CAT[e.cat]?.color ?? P.blue
               const isSelected = selected === e.id
               return (
-                <div key={e.id} id={`evt-${e.id}`} style={{ display: 'grid', gridTemplateColumns: '8px 1fr', gap: '0 20px', borderRadius: 12, transition: 'background 0.3s, box-shadow 0.3s', background: isSelected ? `${color}0c` : 'transparent', boxShadow: isSelected ? `inset 0 0 0 1px ${color}28` : 'none', padding: '12px 16px', margin: '0 -16px' }}>
+                <div
+                  key={e.id}
+                  id={`evt-${e.id}`}
+                  onClick={() => e.entrySlug && router.push(`/entries/${e.entrySlug}`)}
+                  style={{ display: 'grid', gridTemplateColumns: '8px 1fr', gap: '0 20px', borderRadius: 12, transition: 'background 0.3s, box-shadow 0.3s', background: isSelected ? `${color}0c` : 'transparent', boxShadow: isSelected ? `inset 0 0 0 1px ${color}28` : 'none', padding: '12px 16px', margin: '0 -16px', cursor: e.entrySlug ? 'pointer' : 'default' }}
+                >
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', paddingTop: 5 }}>
                     <div style={{ width: 8, height: 8, borderRadius: '50%', background: color, flexShrink: 0 }} />
                     {i < listEvents.length - 1 && <div style={{ width: 1, flex: 1, background: P.hairline, marginTop: 6, minHeight: 32 }} />}
@@ -525,6 +535,11 @@ export default function TrajectoryPage() {
                     <div style={{ fontSize: 'clamp(15px,1.2vw,17px)', fontWeight: 600, color: P.navy, marginBottom: 3 }}>{e.title}</div>
                     <div style={{ fontSize: 13, color, marginBottom: 10 }}>{e.org}</div>
                     <div style={{ fontSize: 13, lineHeight: 1.65, color: P.muted }}>{e.detail}</div>
+                    {e.entrySlug && (
+                      <div style={{ marginTop: 10, fontSize: 12, color: P.cognac, letterSpacing: '.02em' }}>
+                        Read in The Log →
+                      </div>
+                    )}
                   </div>
                 </div>
               )
