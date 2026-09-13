@@ -1,7 +1,6 @@
 'use client'
 
 import CategoryChip from '../../../components/ui/CategoryChip'
-import EntrySidebarWrapper from '../../../components/ui/EntrySidebarWrapper'
 import SectionLabel from '../../../components/ui/SectionLabel'
 import { P } from '../../../lib/palette'
 
@@ -87,7 +86,7 @@ function ResultRow({ exp, config, ate, highlight }: {
 
 export default function HyperLoopEntry() {
   return (
-    <EntrySidebarWrapper activeCat="research">
+    <>
 
       {/* ── Header ── */}
       <div style={{ marginBottom: 12 }}>
@@ -256,21 +255,21 @@ export default function HyperLoopEntry() {
             </div>
           ))}
         </div>
-        {/* SIFT-VLAD RGB descriptor */}
-        <div style={{ borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}`, margin: '24px 0 0' }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/fig_siftvlad.png" alt="SIFT-VLAD RGB descriptor pipeline — terrain frame, keypoints, vocabulary, VLAD" style={{ width: '100%', display: 'block' }} />
-          <div style={{ padding: '8px 14px', borderTop: `1px solid ${P.hairline}`, fontSize: 11, color: P.muted }}>
-            RGB branch: SIFT keypoints → visual vocabulary (K-Means) → VLAD aggregation into a global descriptor.
+        {/* RGB + HSI descriptor side by side */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 16, margin: '24px 0 0', alignItems: 'start' }}>
+          <div style={{ borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}` }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/fig_siftvlad.png" alt="SIFT-VLAD RGB descriptor pipeline" style={{ width: '100%', display: 'block' }} />
+            <div style={{ padding: '8px 14px', borderTop: `1px solid ${P.hairline}`, fontSize: 11, color: P.muted }}>
+              RGB branch: SIFT keypoints → vocabulary → VLAD descriptor
+            </div>
           </div>
-        </div>
-
-        {/* HSI descriptor */}
-        <div style={{ borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}`, margin: '16px 0 0' }}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/fig_hsi_descriptor.png" alt="HSI descriptor pipeline — PCA projection, spectral vocabulary, BoSW and PCAK-VLAD" style={{ width: '100%', display: 'block' }} />
-          <div style={{ padding: '8px 14px', borderTop: `1px solid ${P.hairline}`, fontSize: 11, color: P.muted }}>
-            HSI branch: per-pixel PCA compression → spectral vocabulary → BoSW (TF-IDF) or PCAK-VLAD aggregation.
+          <div style={{ borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}`, width: 260, flexShrink: 0 }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/fig_hsi_descriptor.png" alt="HSI descriptor pipeline — PCA, BoSW, PCAK-VLAD" style={{ width: '100%', display: 'block' }} />
+            <div style={{ padding: '8px 14px', borderTop: `1px solid ${P.hairline}`, fontSize: 11, color: P.muted }}>
+              HSI branch: PCA → spectral vocab → BoSW / PCAK-VLAD
+            </div>
           </div>
         </div>
 
@@ -348,12 +347,12 @@ export default function HyperLoopEntry() {
             </tbody>
           </table>
         </div>
-        {/* ATE bar chart */}
-        <div style={{ borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}`, margin: '24px 0 16px' }}>
+        {/* ATE bar chart — constrained width, nearly square */}
+        <div style={{ borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}`, margin: '24px auto 16px', maxWidth: 560 }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/fig_ate.png" alt="ATE RMSE comparison across experiments — E3 SIFT-VLAD best at 4.95 cm" style={{ width: '100%', display: 'block' }} />
           <div style={{ padding: '8px 14px', borderTop: `1px solid ${P.hairline}`, fontSize: 11, color: P.muted }}>
-            Aligned ATE RMSE across all experiments. Lower is better. E3 (SIFT-VLAD, RGB only) achieves 4.95 cm — 43% below the E2 NetVLAD baseline.
+            Aligned ATE RMSE. E3 SIFT-VLAD (4.95 cm) is 43% below the E2 NetVLAD baseline (8.81 cm).
           </div>
         </div>
 
@@ -405,6 +404,6 @@ export default function HyperLoopEntry() {
         </div>
       </div>
 
-    </EntrySidebarWrapper>
+    </>
   )
 }
