@@ -37,74 +37,91 @@ const entries: Entry[] = [
     featured: true,
   },
   {
-    slug: 'eva-analog-lunar-mission',
-    title: 'What it actually feels like to do an EVA',
-    cat: 'space',
-    date: 'Aug 2026',
-    excerpt: 'Eight days at Dholavira. Three EVAs. A suit that weighs more than you expect and terrain designed to feel like the Moon. Here\'s what nobody tells you about analog astronaut training.',
-    readTime: 7,
-    featured: true,
-  },
-  {
-    slug: 'amadee-27-mars-simulation',
-    title: 'AMADEE-27: my first Mars simulation',
-    cat: 'space',
-    date: 'Sep 2026',
-    excerpt: 'Flying data comms for an analog Mars crew from the Mission Support Center. The ICD definitions, the latency delays, and the strange calm of mission control.',
-    readTime: 9,
-  },
-  {
-    slug: '3dgs-slam-planetary-navigation',
-    title: 'Building 3DGS SLAM for planetary surface navigation',
+    slug: 'loop-closure',
+    title: 'What is a Loop Closure?',
     cat: 'research',
-    date: 'Nov 2025',
-    excerpt: 'Two years at DLR building a visual navigation system that fuses hyperspectral and RGB-D data. How 3D Gaussian Splatting changed our approach — and where it still fails.',
-    readTime: 12,
-  },
-  {
-    slug: 'telemetry-sereact-robots',
-    title: 'Telemetry infrastructure for 100+ robot stations',
-    cat: 'projects',
-    date: 'Mar 2026',
-    excerpt: 'KPI reliability at 50% when I joined. Getting it to 95% meant rethinking the entire event pipeline. RabbitMQ, WebSockets, and the lesson I keep re-learning about observability.',
-    readTime: 8,
-  },
-  {
-    slug: 'visual-odometry-why-its-hard',
-    title: 'On visual odometry and why it\'s still hard',
-    cat: 'research',
-    date: 'Jul 2025',
-    excerpt: 'State estimation sounds clean on paper. In practice, dust on lenses, lighting changes, and feature sparsity mean you\'re constantly fighting the environment. A field report.',
-    readTime: 10,
-  },
-  {
-    slug: 'hackathon-hyperloop',
-    title: 'How we built a Hyperloop pod in 36 hours',
-    cat: 'hackathons',
-    date: 'Apr 2025',
-    excerpt: 'Sleep-deprived, over-caffeinated, and somehow we had a working prototype by Sunday morning. Notes on rapid hardware-software co-design and what actually matters under pressure.',
-    readTime: 6,
-  },
-  {
-    slug: 'decisions-under-uncertainty',
-    title: 'Decisions under uncertainty',
-    cat: 'general',
-    date: 'Jan 2026',
-    excerpt: 'Whether it\'s a Kalman filter or a career move, the structure of the problem is the same: you have a prior, incoming signal, and you update. Some thoughts on reasoning in fog.',
+    date: 'Oct 2026',
+    excerpt: 'A robot\'s worst enemy is drift. Loop closure detection is how SLAM systems recognise a previously seen place and correct accumulated error — in this case, on a simulated planetary surface.',
     readTime: 5,
-  },
+  }
+  // {
+  //   slug: 'eva-analog-lunar-mission',
+  //   title: 'What it actually feels like to do an EVA',
+  //   cat: 'space',
+  //   date: 'Aug 2026',
+  //   excerpt: 'Eight days at Dholavira. Three EVAs. A suit that weighs more than you expect and terrain designed to feel like the Moon. Here\'s what nobody tells you about analog astronaut training.',
+  //   readTime: 7,
+  //   featured: true,
+  // },
+  // {
+  //   slug: 'amadee-27-mars-simulation',
+  //   title: 'AMADEE-27: my first Mars simulation',
+  //   cat: 'space',
+  //   date: 'Sep 2026',
+  //   excerpt: 'Flying data comms for an analog Mars crew from the Mission Support Center. The ICD definitions, the latency delays, and the strange calm of mission control.',
+  //   readTime: 9,
+  // },
+  // {
+  //   slug: '3dgs-slam-planetary-navigation',
+  //   title: 'Building 3DGS SLAM for planetary surface navigation',
+  //   cat: 'research',
+  //   date: 'Nov 2025',
+  //   excerpt: 'Two years at DLR building a visual navigation system that fuses hyperspectral and RGB-D data. How 3D Gaussian Splatting changed our approach — and where it still fails.',
+  //   readTime: 12,
+  // },
+  // {
+  //   slug: 'telemetry-sereact-robots',
+  //   title: 'Telemetry infrastructure for 100+ robot stations',
+  //   cat: 'projects',
+  //   date: 'Mar 2026',
+  //   excerpt: 'KPI reliability at 50% when I joined. Getting it to 95% meant rethinking the entire event pipeline. RabbitMQ, WebSockets, and the lesson I keep re-learning about observability.',
+  //   readTime: 8,
+  // },
+  // {
+  //   slug: 'visual-odometry-why-its-hard',
+  //   title: 'On visual odometry and why it\'s still hard',
+  //   cat: 'research',
+  //   date: 'Jul 2025',
+  //   excerpt: 'State estimation sounds clean on paper. In practice, dust on lenses, lighting changes, and feature sparsity mean you\'re constantly fighting the environment. A field report.',
+  //   readTime: 10,
+  // },
+  // {
+  //   slug: 'hackathon-hyperloop',
+  //   title: 'How we built a Hyperloop pod in 36 hours',
+  //   cat: 'hackathons',
+  //   date: 'Apr 2025',
+  //   excerpt: 'Sleep-deprived, over-caffeinated, and somehow we had a working prototype by Sunday morning. Notes on rapid hardware-software co-design and what actually matters under pressure.',
+  //   readTime: 6,
+  // },
+  // {
+  //   slug: 'decisions-under-uncertainty',
+  //   title: 'Decisions under uncertainty',
+  //   cat: 'general',
+  //   date: 'Jan 2026',
+  //   excerpt: 'Whether it\'s a Kalman filter or a career move, the structure of the problem is the same: you have a prior, incoming signal, and you update. Some thoughts on reasoning in fog.',
+  //   readTime: 5,
+  // },
 ]
 
 export default function EntriesPage() {
   const [activeCat, setActiveCat] = useState<string>('all')
   const [hovered, setHovered] = useState<string | null>(null)
+  const catsWithEntries = useMemo(() => new Set(entries.map(e => e.cat)), [])
+  const [expandedCats, setExpandedCats] = useState<Set<string>>(catsWithEntries)
+
+  const toggleExpand = (key: string) => {
+    setExpandedCats(prev => {
+      const next = new Set(prev)
+      if (next.has(key)) { next.delete(key) } else { next.add(key) }
+      return next
+    })
+  }
 
   const filtered = useMemo(() =>
     activeCat === 'all' ? entries : entries.filter(e => e.cat === activeCat),
   [activeCat])
 
   const featured = filtered.find(e => e.featured)
-  const rest = filtered.filter(e => !e.featured || activeCat !== 'all')
   const listEntries = activeCat === 'all' ? filtered.filter(e => !e.featured) : filtered
 
   const counts = useMemo(() => {
@@ -159,36 +176,35 @@ export default function EntriesPage() {
                 )
               }
 
-              // Other categories — expand on click to show entries
+              // Other categories — file-explorer style: chevron toggles open/close
+              const isOpen = expandedCats.has(key)
               return (
                 <div key={key}>
                   <button
-                    onClick={() => setActiveCat(active ? 'all' : key)}
+                    onClick={() => { setActiveCat(active ? 'all' : key); toggleExpand(key) }}
                     className="entries-cat-btn"
                     style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '9px 12px', borderRadius: 8, border: 'none', background: active ? `${val.color}14` : 'transparent', cursor: 'pointer', textAlign: 'left', transition: 'background 0.2s', width: '100%' }}
                   >
                     <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                      <span style={{ width: 6, height: 6, borderRadius: '50%', background: active ? val.color : P.hairline, flexShrink: 0, transition: 'background 0.2s' }} />
+                      {/* Chevron as directory arrow */}
+                      <span style={{ fontSize: 9, color: isOpen ? val.color : P.muted, opacity: isOpen ? 0.8 : 0.4, transition: 'transform 0.18s, color 0.18s', display: 'inline-block', transform: isOpen ? 'rotate(90deg)' : 'rotate(0deg)', flexShrink: 0, lineHeight: 1 }}>▶</span>
                       <span style={{ fontSize: 13, color: active ? val.color : P.muted, fontWeight: active ? 600 : 400, transition: 'color 0.2s' }}>{val.label}</span>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                      {counts[key] && (
-                        <span className="entries-cat-count" style={{ fontSize: 11, color: active ? val.color : P.hairline, opacity: active ? 1 : 0.6 }}>
-                          {counts[key]}
-                        </span>
-                      )}
-                      <span style={{ fontSize: 10, color: active ? val.color : P.hairline, opacity: 0.7, transition: 'transform 0.2s', display: 'inline-block', transform: active ? 'rotate(90deg)' : 'none' }}>›</span>
-                    </div>
+                    {counts[key] && (
+                      <span className="entries-cat-count" style={{ fontSize: 11, color: active ? val.color : P.hairline, opacity: active ? 1 : 0.5 }}>
+                        {counts[key]}
+                      </span>
+                    )}
                   </button>
 
-                  {/* Expanded entry list */}
-                  {active && catEntries.length > 0 && (
-                    <div style={{ paddingLeft: 22, marginTop: 4, marginBottom: 4, display: 'flex', flexDirection: 'column', gap: 1 }}>
+                  {/* Collapsible entry list */}
+                  {isOpen && catEntries.length > 0 && (
+                    <div style={{ paddingLeft: 26, marginTop: 2, marginBottom: 4, display: 'flex', flexDirection: 'column', gap: 1, borderLeft: `1px solid ${P.hairline}`, marginLeft: 15 }}>
                       {catEntries.map(e => (
                         <a
                           key={e.slug}
                           href={`/entries/${e.slug}`}
-                          style={{ fontSize: 12, color: P.muted, textDecoration: 'none', padding: '5px 8px', borderRadius: 6, lineHeight: 1.4, display: 'block', transition: 'color 0.15s, background 0.15s' }}
+                          style={{ fontSize: 12, color: P.muted, textDecoration: 'none', padding: '4px 8px', borderRadius: 6, lineHeight: 1.4, display: 'block', transition: 'color 0.15s, background 0.15s' }}
                           onMouseEnter={ev => { (ev.currentTarget as HTMLElement).style.color = val.color; (ev.currentTarget as HTMLElement).style.background = `${val.color}0C` }}
                           onMouseLeave={ev => { (ev.currentTarget as HTMLElement).style.color = P.muted; (ev.currentTarget as HTMLElement).style.background = 'transparent' }}
                         >

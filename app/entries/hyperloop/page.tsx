@@ -1,9 +1,9 @@
 'use client'
 
-import { P } from '../../../lib/palette'
+import CategoryChip from '../../../components/ui/CategoryChip'
 import EntrySidebarWrapper from '../../../components/ui/EntrySidebarWrapper'
 import SectionLabel from '../../../components/ui/SectionLabel'
-import CategoryChip from '../../../components/ui/CategoryChip'
+import { P } from '../../../lib/palette'
 
 function Stat({ value, label, accent = false }: { value: string; label: string; accent?: boolean }) {
   return (
@@ -172,18 +172,27 @@ export default function HyperLoopEntry() {
             <span style={{ fontSize: 11, color: P.muted }}>
               Real data · E3 SIFT-VLAD · MMOTS-WS · 27 iterations · RMSE 12.69 cm → 4.90 cm
             </span>
-            <a href="/entries/hyperloop/loop-closure" style={{ fontSize: 11, color: P.cognac, textDecoration: 'none' }}>
+            <a href="/entries/loop-closure" style={{ fontSize: 11, color: P.cognac, textDecoration: 'none' }}>
               full page →
             </a>
           </div>
         </div>
 
-        <p style={{ margin: 0 }}>
+        <p style={{ margin: '0 0 28px' }}>
           The failure mode has a name: <strong style={{ color: P.navy }}>perceptual aliasing</strong>.
           On planetary terrain — craters, regolith, scattered rocks — visually distinct locations appear
           identical to RGB cameras. A system that cannot tell the difference cannot close the loop, and a
           map that cannot close the loop drifts until it is useless.
         </p>
+
+        {/* Data frame comparison */}
+        <div style={{ borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}` }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/fig_data.png" alt="RGB, Depth, and HSI frames from the same scene — terrain appears identical in RGB" style={{ width: '100%', display: 'block' }} />
+          <div style={{ padding: '8px 14px', borderTop: `1px solid ${P.hairline}`, fontSize: 11, color: P.muted }}>
+            Same scene — three modalities. RGB and Depth see visually similar terrain everywhere. HSI encodes spectral identity.
+          </div>
+        </div>
       </div>
 
       {/* ── The Hypothesis ── */}
@@ -195,12 +204,21 @@ export default function HyperLoopEntry() {
           of narrow wavelength bands per pixel, effectively encoding{' '}
           <em style={{ color: P.navy }}>what a surface is made of</em> rather than how it appears.
         </p>
-        <p style={{ margin: 0 }}>
+        <p style={{ margin: '0 0 28px' }}>
           <strong style={{ color: P.navy }}>HyperLoop</strong> is the first framework to integrate
           hyperspectral imaging into the loop closure module of a 3D Gaussian Splatting SLAM system.
           The idea: pair every RGB descriptor with a spectral one. When both agree a location has been
           seen before, trust it. When they disagree, reject it.
         </p>
+
+        {/* Spectra chart */}
+        <div style={{ borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}` }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/fig_spectra.png" alt="Spectral signatures of planetary terrain — Red-NIR nearly identical, SWIR discriminable" style={{ width: '100%', display: 'block' }} />
+          <div style={{ padding: '8px 14px', borderTop: `1px solid ${P.hairline}`, fontSize: 11, color: P.muted }}>
+            Red-NIR (600–860 nm) sensors cannot separate rock types. Diagnostic mineralogy features only appear in SWIR (900–2500 nm).
+          </div>
+        </div>
       </div>
 
       {/* ── Architecture ── */}
@@ -237,6 +255,32 @@ export default function HyperLoopEntry() {
               </ul>
             </div>
           ))}
+        </div>
+        {/* SIFT-VLAD RGB descriptor */}
+        <div style={{ borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}`, margin: '24px 0 0' }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/fig_siftvlad.png" alt="SIFT-VLAD RGB descriptor pipeline — terrain frame, keypoints, vocabulary, VLAD" style={{ width: '100%', display: 'block' }} />
+          <div style={{ padding: '8px 14px', borderTop: `1px solid ${P.hairline}`, fontSize: 11, color: P.muted }}>
+            RGB branch: SIFT keypoints → visual vocabulary (K-Means) → VLAD aggregation into a global descriptor.
+          </div>
+        </div>
+
+        {/* HSI descriptor */}
+        <div style={{ borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}`, margin: '16px 0 0' }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/fig_hsi_descriptor.png" alt="HSI descriptor pipeline — PCA projection, spectral vocabulary, BoSW and PCAK-VLAD" style={{ width: '100%', display: 'block' }} />
+          <div style={{ padding: '8px 14px', borderTop: `1px solid ${P.hairline}`, fontSize: 11, color: P.muted }}>
+            HSI branch: per-pixel PCA compression → spectral vocabulary → BoSW (TF-IDF) or PCAK-VLAD aggregation.
+          </div>
+        </div>
+
+        {/* Full pipeline diagram */}
+        <div style={{ borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}`, margin: '16px 0 0' }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/fig_pipeline.png" alt="HyperLoop pipeline — RGB and HSI branches, decision-level fusion, PGO" style={{ width: '100%', display: 'block' }} />
+          <div style={{ padding: '8px 14px', borderTop: `1px solid ${P.hairline}`, fontSize: 11, color: P.muted }}>
+            Full pipeline: RGB-D frame → submap mapping → parallel RGB + HSI descriptors → fusion gate → geometric verification → PGO
+          </div>
         </div>
         <p style={{ margin: '20px 0 0', fontSize: 14 }}>
           Decision-level fusion is chosen because the HSI sensor (40°×20° FOV) covers only a central
@@ -304,6 +348,23 @@ export default function HyperLoopEntry() {
             </tbody>
           </table>
         </div>
+        {/* ATE bar chart */}
+        <div style={{ borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}`, margin: '24px 0 16px' }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/fig_ate.png" alt="ATE RMSE comparison across experiments — E3 SIFT-VLAD best at 4.95 cm" style={{ width: '100%', display: 'block' }} />
+          <div style={{ padding: '8px 14px', borderTop: `1px solid ${P.hairline}`, fontSize: 11, color: P.muted }}>
+            Aligned ATE RMSE across all experiments. Lower is better. E3 (SIFT-VLAD, RGB only) achieves 4.95 cm — 43% below the E2 NetVLAD baseline.
+          </div>
+        </div>
+
+        {/* Loop closure retrieval precision/recall/F1 */}
+        <div style={{ borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}`, marginBottom: '24px' }}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/fig_lc.png" alt="Loop closure retrieval — Precision, Recall, F1 across all experiments" style={{ width: '100%', display: 'block' }} />
+          <div style={{ padding: '8px 14px', borderTop: `1px solid ${P.hairline}`, fontSize: 11, color: P.muted }}>
+            Loop closure retrieval scores. E4-B (SIFT-VLAD + BoSW, Strict-AND) achieves highest precision (0.24) — more conservative but reliable candidates.
+          </div>
+        </div>
         <p style={{ fontSize: 14, lineHeight: 1.85, color: P.muted, margin: 0 }}>
           The 43% improvement from E2 to E4-B comes entirely from swapping NetVLAD for SIFT-VLAD.
           Best fusion (E4-B) stays within <strong style={{ color: P.navy }}>1.8%</strong> of best RGB-only (E3).
@@ -335,7 +396,7 @@ export default function HyperLoopEntry() {
           ))}
         </div>
         <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-          <a href="/entries/hyperloop/loop-closure" style={{ padding: '10px 20px', borderRadius: 8, background: P.navy, color: '#F5EEE6', fontSize: 13, fontWeight: 500, textDecoration: 'none' }}>
+          <a href="/entries/loop-closure" style={{ padding: '10px 20px', borderRadius: 8, background: P.navy, color: '#F5EEE6', fontSize: 13, fontWeight: 500, textDecoration: 'none' }}>
             Loop closure animation →
           </a>
           <a href="/entries" style={{ padding: '10px 20px', borderRadius: 8, background: 'transparent', color: P.muted, border: `1px solid ${P.hairline}`, fontSize: 13, textDecoration: 'none' }}>
