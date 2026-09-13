@@ -220,29 +220,29 @@ export default function HyperLoopEntry() {
           ))}
         </div>
         {/* RGB + HSI descriptor side by side */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 16, margin: '24px 0 0', alignItems: 'start' }}>
-          <div style={{ borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}` }}>
+        <div style={{ display: 'flex', gap: 12, margin: '20px 0 0', alignItems: 'start', flexWrap: 'wrap' }}>
+          <div style={{ flex: '1 1 200px', maxWidth: 340, borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}` }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/fig_siftvlad.png" alt="SIFT-VLAD RGB descriptor pipeline" style={{ width: '100%', display: 'block' }} />
-            <div style={{ padding: '8px 14px', borderTop: `1px solid ${P.hairline}`, fontSize: 11, color: P.muted }}>
-              RGB branch: SIFT keypoints → vocabulary → VLAD descriptor
+            <div style={{ padding: '7px 12px', borderTop: `1px solid ${P.hairline}`, fontSize: 11, color: P.muted }}>
+              RGB branch: SIFT → VLAD descriptor
             </div>
           </div>
-          <div style={{ borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}`, width: 260, flexShrink: 0 }}>
+          <div style={{ flex: '1 1 160px', maxWidth: 220, borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}` }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/fig_hsi_descriptor.png" alt="HSI descriptor pipeline — PCA, BoSW, PCAK-VLAD" style={{ width: '100%', display: 'block' }} />
-            <div style={{ padding: '8px 14px', borderTop: `1px solid ${P.hairline}`, fontSize: 11, color: P.muted }}>
-              HSI branch: PCA → spectral vocab → BoSW / PCAK-VLAD
+            <div style={{ padding: '7px 12px', borderTop: `1px solid ${P.hairline}`, fontSize: 11, color: P.muted }}>
+              HSI branch: PCA → BoSW / PCAK-VLAD
             </div>
           </div>
         </div>
 
         {/* Full pipeline diagram */}
-        <div style={{ borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}`, margin: '16px 0 0' }}>
+        <div style={{ maxWidth: 560, borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}`, margin: '16px 0 0' }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/fig_pipeline.png" alt="HyperLoop pipeline — RGB and HSI branches, decision-level fusion, PGO" style={{ width: '100%', display: 'block' }} />
           <div style={{ padding: '8px 14px', borderTop: `1px solid ${P.hairline}`, fontSize: 11, color: P.muted }}>
-            Full pipeline: RGB-D frame → submap mapping → parallel RGB + HSI descriptors → fusion gate → geometric verification → PGO
+            Full pipeline: RGB-D → parallel RGB + HSI descriptors → fusion gate → PGO
           </div>
         </div>
         <p style={{ margin: '20px 0 0', fontSize: 14 }}>
@@ -321,11 +321,11 @@ export default function HyperLoopEntry() {
         </div>
 
         {/* Loop closure retrieval precision/recall/F1 */}
-        <div style={{ borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}`, marginBottom: '24px' }}>
+        <div style={{ maxWidth: 480, borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}`, marginBottom: 24 }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/fig_lc.png" alt="Loop closure retrieval — Precision, Recall, F1 across all experiments" style={{ width: '100%', display: 'block' }} />
           <div style={{ padding: '8px 14px', borderTop: `1px solid ${P.hairline}`, fontSize: 11, color: P.muted }}>
-            Loop closure retrieval scores. E4-B (SIFT-VLAD + BoSW, Strict-AND) achieves highest precision (0.24) — more conservative but reliable candidates.
+            E4-B (SIFT-VLAD + BoSW, Strict-AND) achieves highest precision (0.24).
           </div>
         </div>
         <p style={{ fontSize: 14, lineHeight: 1.85, color: P.muted, margin: 0 }}>
