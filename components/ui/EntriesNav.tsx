@@ -3,14 +3,15 @@
 import { useState, useRef, useEffect } from 'react'
 import { P } from '../../lib/palette'
 import SectionLabel from './SectionLabel'
-import { CATS, entries } from '../../lib/entriesData'
+import type { Entry, Category } from '../../lib/db'
 
 function MobileDropdown({
-  selected, onChange, activeSlug: _activeSlug,
+  selected, onChange, activeSlug: _activeSlug, categories = [],
 }: {
   selected: string
   onChange: (key: string) => void
   activeSlug?: string
+  categories?: Category[]
 }) {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
@@ -23,7 +24,8 @@ function MobileDropdown({
     return () => document.removeEventListener('mousedown', handler)
   }, [])
 
-  const selectedLabel = CATS[selected]?.label ?? 'All Entries'
+  const selectedCat = categories.find(c => c.key === selected)
+  const selectedLabel = selectedCat?.label ?? 'All Entries'
 
   return (
     <div ref={ref} style={{ position: 'relative', marginBottom: 4 }}>
@@ -61,7 +63,8 @@ function MobileDropdown({
           zIndex: 50,
           boxShadow: '0 8px 32px rgba(27,38,64,.1)',
         }}>
-          {Object.entries(CATS).map(([key, val]) => {
+          {categories.map(val => {
+            const key = val.key
             const isSelected = key === selected
             return (
               <button
@@ -105,16 +108,17 @@ interface Props {
   onCatChange?: (key: string) => void
   onSelectAll?: () => void
   counts?: Record<string, number>
+  entries?: Entry[]
+  categories?: Category[]
 }
 
-export default function EntriesNav({ activeSlug, activeCat, onCatChange, onSelectAll, counts }: Props) {
+export default function EntriesNav({ activeSlug, activeCat, onCatChange, onSelectAll, counts, entries = [], categories = [] }: Props) {
   const filterMode = !!onCatChange
 
-  const defaultExpanded = new Set(entries.map(e => e.cat))
+  const defaultExpanded = new Set(entries.map(e => e.categories.key))
   const [expandedCats, setExpandedCats] = useState<Set<string>>(() => defaultExpanded)
 
-  // Mobile: track which category is selected in the dropdown
-  const activeCatFromSlug = activeSlug ? entries.find(e => e.slug === activeSlug)?.cat : undefined
+  const activeCatFromSlug = activeSlug ? entries.find(e => e.slug === activeSlug)?.categories.key : undefined
   const [mobileCat, setMobileCat] = useState<string>(activeCatFromSlug ?? activeCat ?? 'all')
 
   const toggleExpand = (key: string) => {
@@ -169,15 +173,15 @@ export default function EntriesNav({ activeSlug, activeCat, onCatChange, onSelec
             style={{
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
               padding: '9px 12px', borderRadius: 8,
-              border: 'none', background: isAllActive ? `${CATS.all.color}14` : 'transparent',
+              border: 'none', background: isAllActive ? `${P.navy}14` : 'transparent',
               cursor: 'pointer', textAlign: 'left', transition: 'background 0.2s', width: '100%',
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <span style={{ width: 6, height: 6, borderRadius: '50%', background: isAllActive ? CATS.all.color : P.hairline, flexShrink: 0, transition: 'background 0.2s' }} />
-              <span style={{ fontSize: 13, color: isAllActive ? CATS.all.color : P.muted, fontWeight: isAllActive ? 600 : 400, transition: 'color 0.2s' }}>All Entries</span>
+              <span style={{ width: 6, height: 6, borderRadius: '50%', background: isAllActive ? P.navy : P.hairline, flexShrink: 0, transition: 'background 0.2s' }} />
+              <span style={{ fontSize: 13, color: isAllActive ? P.navy : P.muted, fontWeight: isAllActive ? 600 : 400, transition: 'color 0.2s' }}>All Entries</span>
             </div>
-            <span className="entries-cat-count" style={{ fontSize: 11, color: isAllActive ? CATS.all.color : P.hairline, opacity: isAllActive ? 1 : 0.6, transition: 'color 0.2s' }}>
+            <span className="entries-cat-count" style={{ fontSize: 11, color: isAllActive ? P.navy : P.hairline, opacity: isAllActive ? 1 : 0.6, transition: 'color 0.2s' }}>
               {allCount}
             </span>
           </button>
@@ -201,10 +205,11 @@ export default function EntriesNav({ activeSlug, activeCat, onCatChange, onSelec
           </a>
         )}
 
-        {Object.entries(CATS)
-          .filter(([k]) => k !== 'all')
-          .map(([key, val]) => {
-            const catEntries = entries.filter(e => e.cat === key)
+        {categories
+          .filter(c => c.key !== 'all')
+          .map(c => { const key = c.key; const val = c; return { key, val } })
+          .map(({ key, val }) => {
+            const catEntries = entries.filter(e => e.categories.key === key)
             const catCount = counts?.[key] ?? catEntries.length
             const isOpen = expandedCats.has(key)
             const isCatActive = activeCatKey === key
@@ -305,13 +310,14 @@ export default function EntriesNav({ activeSlug, activeCat, onCatChange, onSelec
           selected={mobileSelected}
           onChange={handleMobileChange}
           activeSlug={activeSlug}
+          categories={categories}
         />
 
         {/* Inline entries list for mobile */}
         {(() => {
           const mobileEntries = mobileSelected === 'all'
             ? entries
-            : entries.filter(e => e.cat === mobileSelected)
+            : entries.filter(e => e.categories.key === mobileSelected)
           if (mobileEntries.length === 0) return (
             <div style={{ textAlign: 'center', padding: '32px 0', color: P.muted }}>
               <div style={{ fontSize: 24, marginBottom: 8, opacity: 0.3 }}>○</div>
@@ -321,7 +327,7 @@ export default function EntriesNav({ activeSlug, activeCat, onCatChange, onSelec
           return (
             <div style={{ marginTop: 12, display: 'flex', flexDirection: 'column', gap: 0 }}>
               {mobileEntries.map(entry => {
-                const catInfo = CATS[entry.cat]
+                const catInfo = entry.categories
                 const isActive = entry.slug === activeSlug
                 return (
                   <a
@@ -342,7 +348,7 @@ export default function EntriesNav({ activeSlug, activeCat, onCatChange, onSelec
                       }}>
                         {catInfo.label}
                       </span>
-                      <span style={{ fontSize: 11, color: P.muted }}>{entry.date} · {entry.readTime} min read</span>
+                      <span style={{ fontSize: 11, color: P.muted }}>{entry.date} · {entry.read_time} min read</span>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12 }}>
                       <h3 style={{
