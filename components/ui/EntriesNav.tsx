@@ -108,7 +108,7 @@ export default function EntriesNav({ activeSlug, activeCat, onCatChange, onSelec
               <div key={key}>
                 <button
                   onClick={() => {
-                    if (filterMode && onCatChange) onCatChange(isCatActive ? 'all' : key)
+                    if (filterMode && onCatChange) onCatChange(key)
                     toggleExpand(key)
                   }}
                   className="entries-cat-btn"

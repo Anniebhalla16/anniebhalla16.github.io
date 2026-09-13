@@ -4,6 +4,8 @@ import React, { useState, useRef, useCallback } from 'react'
 import { P } from '../../../lib/palette'
 import CategoryChip from '../../../components/ui/CategoryChip'
 import SectionLabel from '../../../components/ui/SectionLabel'
+import EntrySectionTitle from '../../../components/ui/EntrySectionTitle'
+import EntryPill from '../../../components/ui/EntryPill'
 
 // ── Spectral data (based on USGS Spectral Library, splib07) ──────────────────
 // 43 samples at 50 nm intervals, 400–2500 nm
@@ -317,17 +319,6 @@ export default function HyperspectralPage() {
 
   const detailMineral = detail ? MINERALS.find(m => m.key === detail) : null
 
-  const sectionTitle = (text: string) => (
-    <h2 style={{
-      margin: '52px 0 18px', fontSize: 11, fontWeight: 600,
-      letterSpacing: '.18em', textTransform: 'uppercase', color: P.cognac,
-      display: 'flex', alignItems: 'center', gap: 10,
-    }}>
-      <span style={{ display: 'inline-block', width: 24, height: 1, background: P.cognac, opacity: 0.4 }} />
-      {text}
-    </h2>
-  )
-
   return (
     <>
       {/* ── Header ── */}
@@ -371,7 +362,7 @@ export default function HyperspectralPage() {
       </div>
 
       {/* ── What is HSI ── */}
-      {sectionTitle('What is Hyperspectral Imaging?')}
+      <EntrySectionTitle>What is Hyperspectral Imaging?</EntrySectionTitle>
       <div style={{ lineHeight: 1.85, fontSize: 15, color: P.muted, marginBottom: 8 }}>
         <p style={{ margin: '0 0 18px' }}>
           Your phone camera captures three channels — red (~630–700 nm), green (~520–560 nm),
@@ -397,7 +388,7 @@ export default function HyperspectralPage() {
       </div>
 
       {/* ── Interactive chart ── */}
-      {sectionTitle('Planetary Mineral Absorption Features — Why SWIR Matters')}
+      <EntrySectionTitle>Planetary Mineral Absorption Features — Why SWIR Matters</EntrySectionTitle>
 
       <div style={{
         background: '#080E1A', borderRadius: 16,
@@ -460,7 +451,7 @@ export default function HyperspectralPage() {
       </p>
 
       {/* ── Mineral detail cards ── */}
-      {sectionTitle('The Minerals')}
+      <EntrySectionTitle>The Minerals</EntrySectionTitle>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 8 }}>
         {MINERALS.map(m => (
           <div
@@ -493,7 +484,7 @@ export default function HyperspectralPage() {
       </div>
 
       {/* ── Why SWIR matters ── */}
-      {sectionTitle('The Sensor Problem')}
+      <EntrySectionTitle>The Sensor Problem</EntrySectionTitle>
       <div style={{ lineHeight: 1.85, fontSize: 15, color: P.muted }}>
         <p style={{ margin: '0 0 18px' }}>
           Look at the chart above in the amber-shaded region (600–860 nm) — the range of the
@@ -536,7 +527,7 @@ export default function HyperspectralPage() {
       </div>
 
       {/* ── The finding ── */}
-      {sectionTitle('The Key Finding')}
+      <EntrySectionTitle>The Key Finding</EntrySectionTitle>
       <div style={{
         background: P.card, border: `1px solid ${P.hairline}`,
         borderLeft: `3px solid ${P.cognac}`, borderRadius: 14,
@@ -561,15 +552,7 @@ export default function HyperspectralPage() {
         <div style={{ marginBottom: 20 }}>
           {['Hyperspectral Imaging', 'SWIR', 'Planetary Mineralogy', 'SLAM', 'Sensor Fusion',
             'Red-NIR', 'Spectral Library', 'Olivine', 'Orthopyroxene', 'Mars'].map(tag => (
-            <span key={tag} style={{
-              display: 'inline-block', padding: '4px 11px', borderRadius: 20,
-              fontSize: 11, fontWeight: 500,
-              background: `${P.navy}0A`, color: P.navy,
-              border: `1px solid ${P.hairline}`,
-              marginRight: 6, marginBottom: 6, opacity: 0.85,
-            }}>
-              {tag}
-            </span>
+            <EntryPill key={tag}>{tag}</EntryPill>
           ))}
         </div>
         <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
@@ -579,14 +562,6 @@ export default function HyperspectralPage() {
             fontSize: 13, fontWeight: 500, textDecoration: 'none',
           }}>
             See full HyperLoop paper →
-          </a>
-          <a href="/entries" style={{
-            padding: '10px 20px', borderRadius: 8,
-            background: 'transparent', color: P.muted,
-            border: `1px solid ${P.hairline}`,
-            fontSize: 13, textDecoration: 'none',
-          }}>
-            ← All entries
           </a>
         </div>
       </div>

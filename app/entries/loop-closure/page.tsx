@@ -1,17 +1,12 @@
 'use client'
 
 import { P } from '../../../lib/palette'
+import EntryBreadcrumb from '../../../components/ui/EntryBreadcrumb'
 
 export default function LoopClosurePage() {
   return (
     <>
-
-      {/* ── Breadcrumb ── */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 28, fontSize: 12, color: P.muted }}>
-        <a href="/entries" style={{ color: P.muted, textDecoration: 'none' }}>← Entries</a>
-        <span style={{ opacity: 0.4 }}>/</span>
-        <span style={{ color: P.cognac }}>Loop Closure</span>
-      </div>
+      <EntryBreadcrumb category="Loop Closure" />
 
       {/* ── Title ── */}
       <h1 style={{
@@ -90,9 +85,6 @@ export default function LoopClosurePage() {
       <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
         <a href="/entries/hyperloop" style={{ padding: '10px 20px', borderRadius: 8, fontSize: 13, background: P.navy, color: '#F5EEE6', textDecoration: 'none' }}>
           See full HyperLoop entry →
-        </a>
-        <a href="/entries" style={{ padding: '10px 20px', borderRadius: 8, fontSize: 13, background: 'transparent', color: P.muted, border: `1px solid ${P.hairline}`, textDecoration: 'none' }}>
-          All entries
         </a>
       </div>
 

@@ -4,7 +4,7 @@ export const CATS: Record<string, { label: string; color: string; desc: string }
   research:   { label: 'Research',         color: '#4A7FA5', desc: 'SLAM, navigation, sensor fusion' },
   hackathons: { label: 'Hackathons',       color: '#9B7EC8', desc: 'Competitions & sprints' },
   projects:   { label: 'Projects',         color: '#6BBFA3', desc: 'Things I built' },
-  general:    { label: 'General',          color: '#9B8B7A', desc: 'Everything else' },
+  general:    { label: 'Life',              color: '#9B8B7A', desc: 'Everything else' },
 }
 
 export interface Entry {
@@ -34,6 +34,14 @@ export const entries: Entry[] = [
     date: 'Oct 2026',
     excerpt: "A robot's worst enemy is drift. Loop closure detection is how SLAM systems recognise a previously seen place and correct accumulated error — in this case, on a simulated planetary surface.",
     readTime: 5,
+  },
+  {
+    slug: 'leap-of-faith',
+    title: 'Leap of Faith 💫',
+    cat: 'general',
+    date: 'Jun 2026',
+    excerpt: 'Exactly three years ago, I packed my entire life into two suitcases and bought a one-way ticket. A quiet reflection on faith, drift, and the beauty of a horizon that keeps moving.',
+    readTime: 3,
   },
   {
     slug: 'hyperspectral-imaging',

@@ -2,6 +2,8 @@
 
 import CategoryChip from '../../../components/ui/CategoryChip'
 import SectionLabel from '../../../components/ui/SectionLabel'
+import EntrySectionTitle from '../../../components/ui/EntrySectionTitle'
+import EntryPill from '../../../components/ui/EntryPill'
 import { P } from '../../../lib/palette'
 
 function Stat({ value, label, accent = false }: { value: string; label: string; accent?: boolean }) {
@@ -30,44 +32,6 @@ function Stat({ value, label, accent = false }: { value: string; label: string; 
   )
 }
 
-function SectionTitle({ children }: { children: React.ReactNode }) {
-  return (
-    <h2 style={{
-      margin: '52px 0 18px',
-      fontSize: 11,
-      fontWeight: 600,
-      letterSpacing: '.18em',
-      textTransform: 'uppercase',
-      color: P.cognac,
-      display: 'flex',
-      alignItems: 'center',
-      gap: 10,
-    }}>
-      <span style={{ display: 'inline-block', width: 24, height: 1, background: P.cognac, opacity: 0.4 }} />
-      {children}
-    </h2>
-  )
-}
-
-function Pill({ children }: { children: React.ReactNode }) {
-  return (
-    <span style={{
-      display: 'inline-block',
-      padding: '4px 11px',
-      borderRadius: 20,
-      fontSize: 11,
-      fontWeight: 500,
-      background: `${P.navy}0A`,
-      color: P.navy,
-      border: `1px solid ${P.hairline}`,
-      marginRight: 6,
-      marginBottom: 6,
-      opacity: 0.85,
-    }}>
-      {children}
-    </span>
-  )
-}
 
 function ResultRow({ exp, config, ate, highlight }: {
   exp: string; config: string; ate: string; highlight?: boolean
@@ -149,7 +113,7 @@ export default function HyperLoopEntry() {
       </div>
 
       {/* ── The Problem ── */}
-      <SectionTitle>The Problem</SectionTitle>
+      <EntrySectionTitle>The Problem</EntrySectionTitle>
       <div style={{ lineHeight: 1.85, fontSize: 15, color: P.muted }}>
         <p style={{ margin: '0 0 20px' }}>
           Planetary rovers must navigate and map unknown terrain autonomously — a process called SLAM
@@ -160,16 +124,16 @@ export default function HyperLoopEntry() {
         </p>
 
         {/* GIF */}
-        <div style={{ margin: '28px 0 24px', borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}` }}>
+        <div style={{ margin: '20px 0', maxWidth: 480, borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}` }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/lc_animation.gif"
             alt="Loop closure correction — 27 PGO iterations from 12.69 cm to 4.90 cm RMSE, real MMOTS-WS E3 SIFT-VLAD data"
             style={{ width: '100%', display: 'block' }}
           />
-          <div style={{ padding: '10px 16px', borderTop: `1px solid ${P.hairline}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
+          <div style={{ padding: '8px 12px', borderTop: `1px solid ${P.hairline}`, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 8 }}>
             <span style={{ fontSize: 11, color: P.muted }}>
-              Real data · E3 SIFT-VLAD · MMOTS-WS · 27 iterations · RMSE 12.69 cm → 4.90 cm
+              RMSE 12.69 cm → 4.90 cm · 27 iterations
             </span>
             <a href="/entries/loop-closure" style={{ fontSize: 11, color: P.cognac, textDecoration: 'none' }}>
               full page →
@@ -185,17 +149,17 @@ export default function HyperLoopEntry() {
         </p>
 
         {/* Data frame comparison */}
-        <div style={{ borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}` }}>
+        <div style={{ maxWidth: 520, borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}` }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/fig_data.png" alt="RGB, Depth, and HSI frames from the same scene — terrain appears identical in RGB" style={{ width: '100%', display: 'block' }} />
           <div style={{ padding: '8px 14px', borderTop: `1px solid ${P.hairline}`, fontSize: 11, color: P.muted }}>
-            Same scene — three modalities. RGB and Depth see visually similar terrain everywhere. HSI encodes spectral identity.
+            Same scene — three modalities. RGB and Depth see visually identical terrain; HSI encodes spectral identity.
           </div>
         </div>
       </div>
 
       {/* ── The Hypothesis ── */}
-      <SectionTitle>The Hypothesis</SectionTitle>
+      <EntrySectionTitle>The Hypothesis</EntrySectionTitle>
       <div style={{ lineHeight: 1.85, fontSize: 15, color: P.muted }}>
         <p style={{ margin: '0 0 16px' }}>
           Rocks that look identical in RGB often have different mineral composition — and minerals have
@@ -211,17 +175,17 @@ export default function HyperLoopEntry() {
         </p>
 
         {/* Spectra chart */}
-        <div style={{ borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}` }}>
+        <div style={{ maxWidth: 460, borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}`, marginTop: 20 }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/fig_spectra.png" alt="Spectral signatures of planetary terrain — Red-NIR nearly identical, SWIR discriminable" style={{ width: '100%', display: 'block' }} />
           <div style={{ padding: '8px 14px', borderTop: `1px solid ${P.hairline}`, fontSize: 11, color: P.muted }}>
-            Red-NIR (600–860 nm) sensors cannot separate rock types. Diagnostic mineralogy features only appear in SWIR (900–2500 nm).
+            Red-NIR (600–860 nm) sensors cannot separate rock types. Diagnostic features only appear in SWIR (900–2500 nm).
           </div>
         </div>
       </div>
 
       {/* ── Architecture ── */}
-      <SectionTitle>Architecture</SectionTitle>
+      <EntrySectionTitle>Architecture</EntrySectionTitle>
       <div style={{ lineHeight: 1.85, fontSize: 15, color: P.muted }}>
         <p style={{ margin: '0 0 24px' }}>
           HyperLoop extends <strong style={{ color: P.navy }}>LoopSplat</strong> — a 3DGS-based dense
@@ -289,7 +253,7 @@ export default function HyperLoopEntry() {
       </div>
 
       {/* ── Dataset ── */}
-      <SectionTitle>Dataset — MMOTS, DLR</SectionTitle>
+      <EntrySectionTitle>Dataset — MMOTS, DLR</EntrySectionTitle>
       <div style={{ lineHeight: 1.85, fontSize: 15, color: P.muted }}>
         <p style={{ margin: '0 0 20px' }}>
           Data was collected at the{' '}
@@ -328,7 +292,7 @@ export default function HyperLoopEntry() {
       </div>
 
       {/* ── Results ── */}
-      <SectionTitle>Results</SectionTitle>
+      <EntrySectionTitle>Results</EntrySectionTitle>
       <div>
         <div style={{ overflowX: 'auto', marginBottom: 20 }}>
           <table style={{ width: '100%', borderCollapse: 'collapse' }}>
@@ -372,7 +336,7 @@ export default function HyperLoopEntry() {
       </div>
 
       {/* ── Key Finding ── */}
-      <SectionTitle>The Key Finding</SectionTitle>
+      <EntrySectionTitle>The Key Finding</EntrySectionTitle>
       <div style={{ background: P.card, border: `1px solid ${P.hairline}`, borderLeft: `3px solid ${P.cognac}`, borderRadius: 14, padding: '24px 28px' }}>
         <p style={{ margin: '0 0 14px', fontSize: 15, lineHeight: 1.85, color: P.muted }}>
           The <strong style={{ color: P.navy }}>Red-NIR spectral range (600–860 nm)</strong> provides
@@ -391,15 +355,12 @@ export default function HyperLoopEntry() {
         <div style={{ marginBottom: 20 }}>
           {['SLAM', '3D Gaussian Splatting', 'Loop Closure', 'Hyperspectral Imaging',
             'Planetary Robotics', 'SIFT-VLAD', 'Sensor Fusion', 'DLR', 'IAC 2026'].map(tag => (
-            <Pill key={tag}>{tag}</Pill>
+            <EntryPill key={tag}>{tag}</EntryPill>
           ))}
         </div>
         <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
           <a href="/entries/loop-closure" style={{ padding: '10px 20px', borderRadius: 8, background: P.navy, color: '#F5EEE6', fontSize: 13, fontWeight: 500, textDecoration: 'none' }}>
             Loop closure animation →
-          </a>
-          <a href="/entries" style={{ padding: '10px 20px', borderRadius: 8, background: 'transparent', color: P.muted, border: `1px solid ${P.hairline}`, fontSize: 13, textDecoration: 'none' }}>
-            ← All entries
           </a>
         </div>
       </div>

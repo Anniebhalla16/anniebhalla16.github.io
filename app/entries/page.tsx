@@ -39,7 +39,7 @@ export default function EntriesPage() {
           activeCat={activeCat}
           counts={counts}
           onSelectAll={() => setActiveCat('all')}
-          onCatChange={(key) => setActiveCat(activeCat === key ? 'all' : key)}
+          onCatChange={(key) => setActiveCat(key)}
         />
 
         {/* ── Main content ── */}
