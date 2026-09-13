@@ -6,13 +6,20 @@ import SectionLabel from './SectionLabel'
 import { CATS, entries } from '../../lib/entriesData'
 
 interface Props {
+  /* sub-page mode */
   activeSlug?: string
+  /* index filter mode */
+  activeCat?: string
+  onCatChange?: (key: string) => void
+  onSelectAll?: () => void
+  counts?: Record<string, number>
 }
 
-export default function EntriesNav({ activeSlug }: Props) {
-  const [expandedCats, setExpandedCats] = useState<Set<string>>(
-    () => new Set(entries.map(e => e.cat))
-  )
+export default function EntriesNav({ activeSlug, activeCat, onCatChange, onSelectAll, counts }: Props) {
+  const filterMode = !!onCatChange
+
+  const defaultExpanded = new Set(entries.map(e => e.cat))
+  const [expandedCats, setExpandedCats] = useState<Set<string>>(() => defaultExpanded)
 
   const toggleExpand = (key: string) => {
     setExpandedCats(prev => {
@@ -22,7 +29,10 @@ export default function EntriesNav({ activeSlug }: Props) {
     })
   }
 
-  const activeCatKey = entries.find(e => e.slug === activeSlug)?.cat
+  const activeCatKey = activeSlug ? entries.find(e => e.slug === activeSlug)?.cat : activeCat
+
+  const allCount = counts?.all ?? entries.length
+  const isAllActive = filterMode && activeCat === 'all'
 
   return (
     <aside className="entries-sidebar">
@@ -46,37 +56,61 @@ export default function EntriesNav({ activeSlug }: Props) {
 
       <nav className="entries-cat-nav">
         {/* All Entries */}
-        <a
-          href="/entries"
-          className="entries-cat-btn"
-          style={{
-            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-            padding: '9px 12px', borderRadius: 8, textDecoration: 'none',
-            background: 'transparent',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <span style={{ width: 6, height: 6, borderRadius: '50%', background: P.hairline, flexShrink: 0 }} />
-            <span style={{ fontSize: 13, color: P.muted }}>All Entries</span>
-          </div>
-          <span className="entries-cat-count" style={{ fontSize: 11, color: P.hairline, opacity: 0.6 }}>
-            {entries.length}
-          </span>
-        </a>
+        {filterMode ? (
+          <button
+            onClick={onSelectAll}
+            className="entries-cat-btn"
+            style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+              padding: '9px 12px', borderRadius: 8,
+              border: 'none', background: isAllActive ? `${CATS.all.color}14` : 'transparent',
+              cursor: 'pointer', textAlign: 'left', transition: 'background 0.2s', width: '100%',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <span style={{ width: 6, height: 6, borderRadius: '50%', background: isAllActive ? CATS.all.color : P.hairline, flexShrink: 0, transition: 'background 0.2s' }} />
+              <span style={{ fontSize: 13, color: isAllActive ? CATS.all.color : P.muted, fontWeight: isAllActive ? 600 : 400, transition: 'color 0.2s' }}>All Entries</span>
+            </div>
+            <span className="entries-cat-count" style={{ fontSize: 11, color: isAllActive ? CATS.all.color : P.hairline, opacity: isAllActive ? 1 : 0.6, transition: 'color 0.2s' }}>
+              {allCount}
+            </span>
+          </button>
+        ) : (
+          <a
+            href="/entries"
+            className="entries-cat-btn"
+            style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+              padding: '9px 12px', borderRadius: 8, textDecoration: 'none',
+              background: 'transparent',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <span style={{ width: 6, height: 6, borderRadius: '50%', background: P.hairline, flexShrink: 0 }} />
+              <span style={{ fontSize: 13, color: P.muted }}>All Entries</span>
+            </div>
+            <span className="entries-cat-count" style={{ fontSize: 11, color: P.hairline, opacity: 0.6 }}>
+              {allCount}
+            </span>
+          </a>
+        )}
 
         {/* Category sections */}
         {Object.entries(CATS)
           .filter(([k]) => k !== 'all')
           .map(([key, val]) => {
             const catEntries = entries.filter(e => e.cat === key)
-            if (catEntries.length === 0) return null
+            const catCount = counts?.[key] ?? catEntries.length
             const isOpen = expandedCats.has(key)
             const isCatActive = activeCatKey === key
 
             return (
               <div key={key}>
                 <button
-                  onClick={() => toggleExpand(key)}
+                  onClick={() => {
+                    if (filterMode && onCatChange) onCatChange(isCatActive ? 'all' : key)
+                    toggleExpand(key)
+                  }}
                   className="entries-cat-btn"
                   style={{
                     display: 'flex', alignItems: 'center', justifyContent: 'space-between',
@@ -99,12 +133,14 @@ export default function EntriesNav({ activeSlug }: Props) {
                       {val.label}
                     </span>
                   </div>
-                  <span className="entries-cat-count" style={{ fontSize: 11, color: isCatActive ? val.color : P.hairline, opacity: isCatActive ? 1 : 0.5 }}>
-                    {catEntries.length}
-                  </span>
+                  {catCount > 0 && (
+                    <span className="entries-cat-count" style={{ fontSize: 11, color: isCatActive ? val.color : P.hairline, opacity: isCatActive ? 1 : 0.5 }}>
+                      {catCount}
+                    </span>
+                  )}
                 </button>
 
-                {isOpen && (
+                {isOpen && catEntries.length > 0 && (
                   <div style={{
                     paddingLeft: 26, marginTop: 2, marginBottom: 4,
                     display: 'flex', flexDirection: 'column', gap: 1,
