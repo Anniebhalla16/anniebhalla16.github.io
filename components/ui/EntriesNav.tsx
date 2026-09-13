@@ -1,14 +1,106 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { P } from '../../lib/palette'
 import SectionLabel from './SectionLabel'
 import { CATS, entries } from '../../lib/entriesData'
 
-interface Props {
-  /* sub-page mode */
+function MobileDropdown({
+  selected, onChange, activeSlug: _activeSlug,
+}: {
+  selected: string
+  onChange: (key: string) => void
   activeSlug?: string
-  /* index filter mode */
+}) {
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
+    }
+    document.addEventListener('mousedown', handler)
+    return () => document.removeEventListener('mousedown', handler)
+  }, [])
+
+  const selectedLabel = CATS[selected]?.label ?? 'All Entries'
+
+  return (
+    <div ref={ref} style={{ position: 'relative', marginBottom: 4 }}>
+      {/* Trigger */}
+      <button
+        onClick={() => setOpen(o => !o)}
+        style={{
+          width: '100%',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          padding: '10px 12px',
+          background: 'transparent',
+          border: `1px solid ${P.hairline}`,
+          borderRadius: 8,
+          cursor: 'pointer',
+          fontFamily: 'inherit',
+        }}
+      >
+        <span style={{ fontSize: 13, fontWeight: 500, color: P.navy }}>{selectedLabel}</span>
+        <span style={{
+          fontSize: 9, color: P.muted, opacity: 0.6,
+          transition: 'transform 0.18s',
+          display: 'inline-block',
+          transform: open ? 'rotate(180deg)' : 'none',
+        }}>▼</span>
+      </button>
+
+      {/* Options list */}
+      {open && (
+        <div style={{
+          position: 'absolute', top: 'calc(100% + 4px)', left: 0, right: 0,
+          background: P.bg,
+          border: `1px solid ${P.hairline}`,
+          borderRadius: 8,
+          overflow: 'hidden',
+          zIndex: 50,
+          boxShadow: '0 8px 32px rgba(27,38,64,.1)',
+        }}>
+          {Object.entries(CATS).map(([key, val]) => {
+            const isSelected = key === selected
+            return (
+              <button
+                key={key}
+                onClick={() => { onChange(key); setOpen(false) }}
+                style={{
+                  width: '100%', display: 'flex', alignItems: 'center', gap: 10,
+                  padding: '10px 14px',
+                  border: 'none', background: isSelected ? `${val.color}12` : 'transparent',
+                  cursor: 'pointer', textAlign: 'left',
+                  borderBottom: `1px solid ${P.hairline}`,
+                  fontFamily: 'inherit',
+                }}
+              >
+                <span style={{
+                  width: 6, height: 6, borderRadius: '50%', flexShrink: 0,
+                  background: isSelected ? val.color : P.hairline,
+                }} />
+                <span style={{
+                  fontSize: 13,
+                  color: isSelected ? val.color : P.muted,
+                  fontWeight: isSelected ? 600 : 400,
+                }}>
+                  {val.label}
+                </span>
+                {isSelected && (
+                  <span style={{ marginLeft: 'auto', fontSize: 10, color: val.color }}>✓</span>
+                )}
+              </button>
+            )
+          })}
+        </div>
+      )}
+    </div>
+  )
+}
+
+interface Props {
+  activeSlug?: string
   activeCat?: string
   onCatChange?: (key: string) => void
   onSelectAll?: () => void
@@ -21,6 +113,10 @@ export default function EntriesNav({ activeSlug, activeCat, onCatChange, onSelec
   const defaultExpanded = new Set(entries.map(e => e.cat))
   const [expandedCats, setExpandedCats] = useState<Set<string>>(() => defaultExpanded)
 
+  // Mobile: track which category is selected in the dropdown
+  const activeCatFromSlug = activeSlug ? entries.find(e => e.slug === activeSlug)?.cat : undefined
+  const [mobileCat, setMobileCat] = useState<string>(activeCatFromSlug ?? activeCat ?? 'all')
+
   const toggleExpand = (key: string) => {
     setExpandedCats(prev => {
       const next = new Set(prev)
@@ -29,10 +125,22 @@ export default function EntriesNav({ activeSlug, activeCat, onCatChange, onSelec
     })
   }
 
-  const activeCatKey = activeSlug ? entries.find(e => e.slug === activeSlug)?.cat : activeCat
+  const activeCatKey = activeSlug ? activeCatFromSlug : activeCat
 
   const allCount = counts?.all ?? entries.length
   const isAllActive = filterMode && activeCat === 'all'
+
+  // Mobile dropdown value — syncs with activeCat prop in filter mode
+  const mobileSelected = filterMode ? (activeCat ?? 'all') : mobileCat
+
+  const handleMobileChange = (key: string) => {
+    if (filterMode) {
+      if (key === 'all') onSelectAll?.()
+      else onCatChange?.(key)
+    } else {
+      setMobileCat(key)
+    }
+  }
 
   return (
     <aside className="entries-sidebar">
@@ -54,8 +162,8 @@ export default function EntriesNav({ activeSlug, activeCat, onCatChange, onSelec
 
       <div className="entries-sidebar-divider" style={{ height: 1, background: P.hairline, marginBottom: 24 }} />
 
-      <nav className="entries-cat-nav">
-        {/* All Entries */}
+      {/* ── Desktop nav (hidden on mobile) ── */}
+      <nav className="entries-cat-nav entries-desktop-only">
         {filterMode ? (
           <button
             onClick={onSelectAll}
@@ -95,7 +203,6 @@ export default function EntriesNav({ activeSlug, activeCat, onCatChange, onSelec
           </a>
         )}
 
-        {/* Category sections */}
         {Object.entries(CATS)
           .filter(([k]) => k !== 'all')
           .map(([key, val]) => {
@@ -189,6 +296,15 @@ export default function EntriesNav({ activeSlug, activeCat, onCatChange, onSelec
             )
           })}
       </nav>
+
+      {/* ── Mobile nav: custom dropdown + entry list (hidden on desktop) ── */}
+      <div className="entries-mobile-only">
+        <MobileDropdown
+          selected={mobileSelected}
+          onChange={handleMobileChange}
+          activeSlug={activeSlug}
+        />
+      </div>
 
       <div className="entries-sidebar-divider" style={{ height: 1, background: P.hairline, margin: '24px 0' }} />
 

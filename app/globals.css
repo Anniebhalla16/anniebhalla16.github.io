@@ -121,6 +121,10 @@ a:hover {
   gap: 2px;
 }
 
+/* Desktop: hide mobile nav */
+.entries-mobile-only { display: none; }
+.entries-desktop-only { display: flex; }
+
 @media (max-width: 767px) {
   .entries-layout {
     grid-template-columns: 1fr;
@@ -131,21 +135,10 @@ a:hover {
     position: static;
   }
 
-  .entries-cat-nav {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 6px;
-  }
+  /* Swap nav variants */
+  .entries-desktop-only { display: none; }
+  .entries-mobile-only  { display: block; }
 
-  .entries-cat-btn {
-    flex-shrink: 0 !important;
-    white-space: nowrap;
-    border-radius: 999px !important;
-    padding: 7px 14px !important;
-    justify-content: flex-start !important;
-  }
-
-  .entries-cat-count { display: none; }
   .entries-sidebar-desc { display: none; }
   .entries-sidebar-divider { display: none; }
   .entries-section-label { display: none; }
