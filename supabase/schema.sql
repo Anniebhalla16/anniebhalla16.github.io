@@ -180,3 +180,8 @@ alter table trajectory_events enable row level security;
 create policy "public read categories"       on categories        for select using (true);
 create policy "public read entries"          on entries           for select using (true);
 create policy "public read trajectory"       on trajectory_events for select using (true);
+
+-- ── Grants: allow anon role to read all tables ───────────────────────────────
+grant select on public.categories       to anon;
+grant select on public.entries          to anon;
+grant select on public.trajectory_events to anon;

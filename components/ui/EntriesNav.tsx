@@ -115,6 +115,9 @@ interface Props {
 export default function EntriesNav({ activeSlug, activeCat, onCatChange, onSelectAll, counts, entries = [], categories = [] }: Props) {
   const filterMode = !!onCatChange
 
+  // Only show categories that have at least one entry
+  const catsWithEntries = categories.filter(c => c.key !== 'all' && entries.some(e => e.categories.key === c.key))
+
   const defaultExpanded = new Set(entries.map(e => e.categories.key))
   const [expandedCats, setExpandedCats] = useState<Set<string>>(() => defaultExpanded)
 
@@ -205,8 +208,7 @@ export default function EntriesNav({ activeSlug, activeCat, onCatChange, onSelec
           </a>
         )}
 
-        {categories
-          .filter(c => c.key !== 'all')
+        {catsWithEntries
           .map(c => { const key = c.key; const val = c; return { key, val } })
           .map(({ key, val }) => {
             const catEntries = entries.filter(e => e.categories.key === key)
@@ -310,7 +312,7 @@ export default function EntriesNav({ activeSlug, activeCat, onCatChange, onSelec
           selected={mobileSelected}
           onChange={handleMobileChange}
           activeSlug={activeSlug}
-          categories={categories}
+          categories={catsWithEntries}
         />
 
         {/* Inline entries list for mobile */}
