@@ -1,11 +1,8 @@
 'use client'
 
-import { useState } from 'react'
 import { P } from '../../../lib/palette'
 
 export default function LoopClosurePage() {
-  const [showTerrain, setShowTerrain] = useState(false)
-
   return (
     <>
 
@@ -32,72 +29,14 @@ export default function LoopClosurePage() {
         Real trajectory data · E3 SIFT-VLAD · MMOTS-WS dataset · DLR Oberpfaffenhofen
       </p>
 
-      {/* ── Loop closure animation + terrain toggle ── */}
-      <div style={{ position: 'relative', borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}`, marginBottom: 10 }}>
-
-        {/* terrain toggle pill */}
-        <button
-          onClick={() => setShowTerrain(v => !v)}
-          style={{
-            position: 'absolute', top: 10, right: 10, zIndex: 10,
-            display: 'flex', alignItems: 'center', gap: 5,
-            padding: '5px 11px', borderRadius: 20, fontSize: 11,
-            fontWeight: 600, letterSpacing: '.04em',
-            background: showTerrain ? P.cognac : 'rgba(10,10,10,0.6)',
-            color: '#fff', border: 'none', cursor: 'pointer',
-            backdropFilter: 'blur(8px)',
-            transition: 'background 0.2s ease',
-            lineHeight: 1,
-          }}
-        >
-          <span style={{ fontSize: 12 }}>{showTerrain ? '✕' : '📷'}</span>
-          {showTerrain ? 'hide terrain' : 'terrain cam'}
-        </button>
-
-        <div style={{ display: 'flex' }}>
-          {/* LC animation */}
-          <div style={{ flex: 1, minWidth: 0 }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/lc_animation.gif"
-              alt="Loop closure correction — 27 PGO iterations converging from 12.69 cm to 4.90 cm RMSE on real MMOTS-WS data"
-              style={{ width: '100%', display: 'block' }}
-            />
-          </div>
-
-          {/* terrain panel */}
-          {showTerrain && (
-            <div style={{
-              width: 220, flexShrink: 0,
-              background: '#080808',
-              display: 'flex', flexDirection: 'column',
-              alignItems: 'center', justifyContent: 'center',
-              borderLeft: '1px solid rgba(255,255,255,0.06)',
-            }}>
-              <p style={{
-                margin: '14px 10px 8px',
-                fontSize: 9, fontWeight: 700,
-                letterSpacing: '.12em', textTransform: 'uppercase',
-                color: 'rgba(255,255,255,0.4)', textAlign: 'center',
-              }}>
-                what the rover sees
-              </p>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/terrain_frames.gif"
-                alt="RGB frames from MMOTS-WS — every frame looks nearly identical"
-                style={{ width: '100%', display: 'block' }}
-              />
-              <p style={{
-                margin: '8px 10px 14px',
-                fontSize: 9, color: 'rgba(255,255,255,0.25)',
-                textAlign: 'center', lineHeight: 1.5,
-              }}>
-                MMOTS-WS · DLR Oberpfaffenhofen<br />regolith, no landmarks
-              </p>
-            </div>
-          )}
-        </div>
+      {/* ── Loop closure animation ── */}
+      <div style={{ borderRadius: 12, overflow: 'hidden', border: `1px solid ${P.hairline}`, marginBottom: 10 }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/lc_animation.gif"
+          alt="Loop closure correction — 27 PGO iterations converging from 12.69 cm to 4.90 cm RMSE on real MMOTS-WS data"
+          style={{ width: '100%', display: 'block' }}
+        />
       </div>
       <p style={{ margin: '0 0 48px', fontSize: 11, color: P.muted }}>
         E3 · SIFT-VLAD · RGB only · no HSI fusion · MMOTS-WS · 27 iterations · RMSE 12.69 cm → 4.90 cm
