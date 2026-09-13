@@ -142,6 +142,7 @@ a:hover {
   .entries-sidebar-desc { display: none; }
   .entries-sidebar-divider { display: none; }
   .entries-section-label { display: none; }
+  .entries-main { display: none; }
 }
 
 

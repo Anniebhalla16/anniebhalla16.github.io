@@ -155,9 +155,7 @@ export default function EntriesNav({ activeSlug, activeCat, onCatChange, onSelec
         lineHeight: 0.92,
         letterSpacing: '-.02em',
       }}>
-        <span style={{ color: P.navy }}>The</span>
-        <br />
-        <em style={{ fontStyle: 'italic', color: P.cognac }}>Log.</em>
+        <span style={{ color: P.navy }}>The </span><em style={{ fontStyle: 'italic', color: P.cognac }}>Log.</em>
       </h1>
 
       <div className="entries-sidebar-divider" style={{ height: 1, background: P.hairline, marginBottom: 24 }} />
@@ -215,8 +213,12 @@ export default function EntriesNav({ activeSlug, activeCat, onCatChange, onSelec
               <div key={key}>
                 <button
                   onClick={() => {
-                    if (filterMode && onCatChange) onCatChange(key)
-                    toggleExpand(key)
+                    if (filterMode && onCatChange) {
+                      onCatChange(key)
+                      setExpandedCats(prev => { const n = new Set(prev); n.add(key); return n })
+                    } else {
+                      toggleExpand(key)
+                    }
                   }}
                   className="entries-cat-btn"
                   style={{
@@ -304,6 +306,61 @@ export default function EntriesNav({ activeSlug, activeCat, onCatChange, onSelec
           onChange={handleMobileChange}
           activeSlug={activeSlug}
         />
+
+        {/* Inline entries list for mobile */}
+        {(() => {
+          const mobileEntries = mobileSelected === 'all'
+            ? entries
+            : entries.filter(e => e.cat === mobileSelected)
+          if (mobileEntries.length === 0) return (
+            <div style={{ textAlign: 'center', padding: '32px 0', color: P.muted }}>
+              <div style={{ fontSize: 24, marginBottom: 8, opacity: 0.3 }}>○</div>
+              <div style={{ fontSize: 13 }}>No entries in this category yet.</div>
+            </div>
+          )
+          return (
+            <div style={{ marginTop: 12, display: 'flex', flexDirection: 'column', gap: 0 }}>
+              {mobileEntries.map(entry => {
+                const catInfo = CATS[entry.cat]
+                const isActive = entry.slug === activeSlug
+                return (
+                  <a
+                    key={entry.slug}
+                    href={`/entries/${entry.slug}`}
+                    style={{
+                      display: 'block',
+                      textDecoration: 'none',
+                      padding: '16px 0',
+                      borderBottom: `1px solid ${P.hairline}`,
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+                      <span style={{
+                        fontSize: 9, letterSpacing: '.12em', textTransform: 'uppercase',
+                        color: catInfo.color, border: `1px solid ${catInfo.color}60`,
+                        padding: '2px 6px', borderRadius: 4,
+                      }}>
+                        {catInfo.label}
+                      </span>
+                      <span style={{ fontSize: 11, color: P.muted }}>{entry.date} · {entry.readTime} min read</span>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12 }}>
+                      <h3 style={{
+                        margin: 0,
+                        fontFamily: 'var(--font-serif), Georgia, serif',
+                        fontWeight: 400, fontSize: 17, lineHeight: 1.25, letterSpacing: '-.01em',
+                        color: isActive ? catInfo.color : P.navy,
+                      }}>
+                        {entry.title}
+                      </h3>
+                      <span style={{ fontSize: 16, color: P.muted, flexShrink: 0, marginTop: 2 }}>→</span>
+                    </div>
+                  </a>
+                )
+              })}
+            </div>
+          )
+        })()}
       </div>
 
       <div className="entries-sidebar-divider" style={{ height: 1, background: P.hairline, margin: '24px 0' }} />

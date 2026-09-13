@@ -43,7 +43,7 @@ export default function EntriesPage() {
         />
 
         {/* ── Main content ── */}
-        <main>
+        <main className="entries-main">
           {/* Header row */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 'clamp(24px,4vh,40px)', paddingBottom: 16, borderBottom: `1px solid ${P.hairline}` }}>
             <span style={{ fontSize: 11, letterSpacing: '.2em', textTransform: 'uppercase', color: P.muted }}>
