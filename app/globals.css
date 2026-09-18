@@ -104,6 +104,7 @@ a:hover {
   padding-right: clamp(28px, 6vw, 110px);
   position: relative;
   z-index: 1;
+  transition: grid-template-columns 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .entries-layout > * {

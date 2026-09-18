@@ -275,7 +275,13 @@ export default function HyperLoopEntry() {
                 ['SS-Sweden','2,100', '262.2 s', '123.3 m','Spectral diversity'],
               ] as const).map(([seq, frames, dur, dist, role], i) => (
                 <tr key={seq} style={{ background: i === 0 ? `${P.cognac}07` : 'transparent', borderBottom: `1px solid ${P.hairline}` }}>
-                  <td style={{ padding: '9px 12px', fontSize: 13, fontWeight: i === 0 ? 600 : 400, color: i === 0 ? P.cognac : P.navy }}>{seq}</td>
+                  <td style={{ padding: '9px 12px', fontSize: 13, fontWeight: i === 0 ? 600 : 400, color: i === 0 ? P.cognac : P.navy }}>
+                  {i === 0 ? (
+                    <a href="/entries/hyperloop/mmots-dataset" style={{ color: P.cognac, textDecoration: 'none', borderBottom: `1px solid ${P.cognac}40` }}>
+                      {seq}
+                    </a>
+                  ) : seq}
+                </td>
                   <td style={{ padding: '9px 12px', fontSize: 13, color: P.muted }}>{frames}</td>
                   <td style={{ padding: '9px 12px', fontSize: 13, color: P.muted }}>{dur}</td>
                   <td style={{ padding: '9px 12px', fontSize: 13, color: P.muted }}>{dist}</td>

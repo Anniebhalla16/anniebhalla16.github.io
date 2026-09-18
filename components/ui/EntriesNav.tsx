@@ -110,9 +110,11 @@ interface Props {
   counts?: Record<string, number>
   entries?: Entry[]
   categories?: Category[]
+  sidebarOpen?: boolean
+  onToggleSidebar?: () => void
 }
 
-export default function EntriesNav({ activeSlug, activeCat, onCatChange, onSelectAll, counts, entries = [], categories = [] }: Props) {
+export default function EntriesNav({ activeSlug, activeCat, onCatChange, onSelectAll, counts, entries = [], categories = [], sidebarOpen = true, onToggleSidebar }: Props) {
   const filterMode = !!onCatChange
 
   // Only show categories that have at least one entry
@@ -150,7 +152,35 @@ export default function EntriesNav({ activeSlug, activeCat, onCatChange, onSelec
   }
 
   return (
-    <aside className="entries-sidebar">
+    <aside className="entries-sidebar" style={{ overflow: 'hidden' }}>
+      {/* Toggle button */}
+      {onToggleSidebar && (
+        <div style={{ display: 'flex', justifyContent: sidebarOpen ? 'flex-end' : 'center', marginBottom: sidebarOpen ? 4 : 0 }}>
+          <button
+            onClick={onToggleSidebar}
+            title={sidebarOpen ? 'Collapse sidebar' : 'Expand sidebar'}
+            style={{
+              width: 28, height: 28,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              background: 'transparent',
+              border: `1px solid ${P.hairline}`,
+              borderRadius: '50%',
+              cursor: 'pointer',
+              color: P.muted,
+              fontSize: 11,
+              lineHeight: 1,
+              flexShrink: 0,
+              transition: 'border-color 0.15s, color 0.15s',
+            }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = P.cognac; (e.currentTarget as HTMLElement).style.color = P.cognac }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = P.hairline; (e.currentTarget as HTMLElement).style.color = P.muted }}
+          >
+            {sidebarOpen ? '‹' : '›'}
+          </button>
+        </div>
+      )}
+
+      {sidebarOpen && <>
       <div className="entries-section-label">
         <SectionLabel index="03" label="Entries" />
       </div>
@@ -376,6 +406,7 @@ export default function EntriesNav({ activeSlug, activeCat, onCatChange, onSelec
       <p className="entries-sidebar-desc" style={{ margin: 0, fontSize: 12, lineHeight: 1.7, color: P.muted, paddingLeft: 12 }}>
         Writing on space, robotics, research, and whatever else is on my mind. Updated irregularly.
       </p>
+      </>}
     </aside>
   )
 }

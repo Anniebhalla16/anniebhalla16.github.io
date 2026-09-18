@@ -17,6 +17,8 @@ export default function Navbar() {
   const isInner = !!pathname && pathname !== '/'
   const [open, setOpen] = useState(false)
 
+  if (pathname === '/') return null
+
   return (
     <div
       onMouseEnter={() => setOpen(true)}
